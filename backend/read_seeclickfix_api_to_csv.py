@@ -59,7 +59,47 @@ def read_categories(readfile=False):
 
 
 def read_seeclickfix_api_to_csv(arg1, arg2):
-    """PURPOSE: To """
+    """PURPOSE:
+        To read in all the New Haven data from the see click fix API
+        for New Haven and write it to CSV. The data will be visualized
+        with CartoDB, which cannot take SQL input.
+    """
+
+    #first read in the category information:
+    scf_cat_df = read_categories(readfile=True)
+
+    #the jq rule that will be used to flatten the JSON object return from the
+    #SCF API into something pandas can understand:
+    record_rule = ("[.issues | .[] | {"
+                   "id: .id, "
+                   "status: .status,"
+                   "summary: .summary,"
+                   "address: .address,"
+                   "lat: .lat,"
+                   "lng: .lng,"
+                   "closed_at: .closed_at,"
+                   "acknowledged_at: .acknowledged_at,"
+                   "created_at: .created_at,"
+                   "updated_at: .updated_at,"
+                   "shortened_url: .shortened_url,"
+                   "reporter_id: .reporter.id,"
+                   "reporter_name: .reporter.name,"
+                   "reporter_role: .reporter.role,"
+                   "}]")
+
+    scf_df = pd.DataFrame(columns=['id', 'status', 'summary', 'address', 'lat', 'lng', 'closed_at', 'acknowledged_at',
+                                   'created_at', 'updated_at', 'shortened_url',
+                                   'reporter_id', 'reporter_name', 'reporter_role',
+                                   'issue_id', 'category'])
+
+    for i in scf_cat_df.index:
+        print(scf_cat_df.loc[i, 'title'], scf_cat_df.loc[i, 'type'])
+        issurl = 'https://seeclickfix.com/api/v2/issues?request_types='+scf_cat_df.loc[i, 'type']+'&per_page=10000'
+        json_data = json.load(urllib2.urlopen(issurl))
+        scf_iss_df = pd.DataFrame(jq(record_rule).transform(json_data))
+        scf_iss_df['issue_id'] = scf_cat_df.loc[i, 'type']
+        scf_iss_df['category'] = scf_cat_df.loc[i, 'title']
+        scf_df = scf_df.append(scf_iss_df, ignore_index=True)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
@@ -72,10 +112,6 @@ if __name__ == '__main__':
         help='This argument does something else. By specifying ' +
              'the "nargs=>" makes this argument not required.',
              nargs='?')
-    if len(sys.argv) > 3:
-        print('use the command')
-        print('python filename.py tablenum columnnum')
-        sys.exit(2)
 
     args = parser.parse_args()
 
