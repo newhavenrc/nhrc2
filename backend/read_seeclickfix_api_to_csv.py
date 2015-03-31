@@ -9,7 +9,6 @@ import sys
 import argparse
 import json
 import urllib2
-import pandas as pd
 from jq import jq
 
 try:
@@ -45,6 +44,12 @@ def read_categories(readfile=False):
     else:
         json_cats = json.load(urllib2.urlopen('https://seeclickfix.com/api/v2/issues/new?address=New+Haven,+CT'))
 
+    scf_cat_rule = '[.[] | .[] | {title: .title, url: .url, organization: .organization}]'
+
+    scf_cat_df = pd.DataFrame(jq(scf_cat_rule).transform(json_cats))
+    scf_cat_df['type'] = [urlstr.split('/')[-1] for urlstr in scf_cat_df['url']]
+
+    return scf_cat_df
 
 
 def read_seeclickfix_api_to_csv(arg1, arg2):
