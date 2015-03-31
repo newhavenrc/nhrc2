@@ -23,6 +23,7 @@ except ImportError:
     print('You need to install matplotlib')
 
 import pandas as pd
+import nhrc2
 
 __author__ = "Matt Giguere (github: @mattgiguere)"
 __license__ = "MIT"
@@ -30,6 +31,11 @@ __version__ = '0.0.1'
 __maintainer__ = "Matt Giguere"
 __email__ = "matthew.giguere@yale.edu"
 __status__ = " Development NOT(Prototype or Production)"
+
+
+#get the root directory for the package. This will allow for the
+#code to be run from any directory on any machine:
+nhrc2dir = '/'.join(str(nhrc2.__file__).split('/')[:-1])+'/'
 
 
 def read_categories(readfile=False):
@@ -40,7 +46,7 @@ def read_categories(readfile=False):
         Read the category data from file for test purposes.
     """
     if readfile:
-        json_cats = json.load(open('/Users/matt/projects/nhrc2/data/scf_cats.json', 'r'))
+        json_cats = json.load(open(nhrc2dir+'data/scf_cats.json', 'r'))
     else:
         json_cats = json.load(urllib2.urlopen('https://seeclickfix.com/api/v2/issues/new?address=New+Haven,+CT'))
 
