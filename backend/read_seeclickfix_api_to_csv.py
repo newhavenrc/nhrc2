@@ -58,15 +58,15 @@ def read_categories(readfile=False):
     return scf_cat_df
 
 
-def read_seeclickfix_api_to_csv(arg1, arg2):
-    """PURPOSE:
-        To read in all the New Haven data from the see click fix API
-        for New Haven and write it to CSV. The data will be visualized
-        with CartoDB, which cannot take SQL input.
+def read_issues(scf_cat_df, readfile=False):
     """
+    PURPOSE: To read in all the category data from the API and return 
+        a pandas DataFrame
 
-    #first read in the category information:
-    scf_cat_df = read_categories(readfile=True)
+    :param scf_cat_df:
+        The category DataFrame
+
+    """
 
     #the jq rule that will be used to flatten the JSON object return from the
     #SCF API into something pandas can understand:
@@ -101,18 +101,46 @@ def read_seeclickfix_api_to_csv(arg1, arg2):
         scf_iss_df['category'] = scf_cat_df.loc[i, 'title']
         scf_df = scf_df.append(scf_iss_df, ignore_index=True)
 
+    return scf_df
+
+
+def read_seeclickfix_api_to_csv(readfile=False, donotwrite=False):
+    """PURPOSE:
+        To read in all the New Haven data from the see click fix API
+        for New Haven and write it to CSV. The data will be visualized
+        with CartoDB, which cannot take SQL input.
+    """
+
+    #first read in the category information:
+    scf_cat_df = read_categories(readfile=True)
+
+    scf_df = read_issues(scf_cat_df, readfile=readfile)
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description='argparse object.')
     parser.add_argument(
-        'arg1',
-        help='This argument does something.')
+        '--readfile',
+        help='This routine is intended to read in the data straight from' +
+             'the seeclickfix api. If you want to test it by reading in ' +
+             'data from file, set --readfile.', action="store_true")
     parser.add_argument(
-        'arg2',
-        help='This argument does something else. By specifying ' +
-             'the "nargs=>" makes this argument not required.',
-             nargs='?')
+        '--donotwrite',
+        help='This routine is intended to write the data read in from SCF' +
+             'to a CSV. If you want to test it by reading in ' +
+             'data but NOT writing to CSV, set --donotwrite.', action="store_true")
 
     args = parser.parse_args()
 
-    read_seeclickfix_api_to_csv(int(args.arg1), args.arg2)
+    if args.readfile:
+        readfile = True
+    else:
+        readfile = False
+
+    if args.donotwrite:
+        donotwrite = False
+    else:
+        donotwrite = True
+
+    read_seeclickfix_api_to_csv(readfile=readfile, donotwrite=donotwrite)
