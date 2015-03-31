@@ -104,6 +104,13 @@ def read_issues(scf_cat_df, readfile=False):
     return scf_df
 
 
+def write_to_csv(scf_df):
+    """PURPOSE:
+        To write the contents to CSV
+    """
+    scf_df.to_csv(nhrc2dir+'data/scf_data_full.csv', sep=',', encoding='utf-8')
+
+
 def read_seeclickfix_api_to_csv(readfile=False, donotwrite=False):
     """PURPOSE:
         To read in all the New Haven data from the see click fix API
@@ -115,6 +122,9 @@ def read_seeclickfix_api_to_csv(readfile=False, donotwrite=False):
     scf_cat_df = read_categories(readfile=True)
 
     scf_df = read_issues(scf_cat_df, readfile=readfile)
+
+    if not donotwrite:
+        write_to_csv(scf_df)
 
 
 if __name__ == '__main__':
