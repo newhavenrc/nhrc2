@@ -168,7 +168,7 @@ if __name__ == '__main__':
         donotwrite = False
 
     if args.outname:
-        outname = outname
+        outname = args.outname
     else:
         outname = ''
 
