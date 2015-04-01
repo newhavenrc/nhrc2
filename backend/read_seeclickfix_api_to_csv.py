@@ -60,7 +60,7 @@ def read_categories(readfile=False):
 
 def read_issues(scf_cat_df, readfile=False):
     """
-    PURPOSE: To read in all the category data from the API and return 
+    PURPOSE: To read in all the category data from the API and return
         a pandas DataFrame
 
     :param scf_cat_df:
@@ -100,6 +100,11 @@ def read_issues(scf_cat_df, readfile=False):
         scf_iss_df['issue_id'] = scf_cat_df.loc[i, 'type']
         scf_iss_df['category'] = scf_cat_df.loc[i, 'title']
         scf_df = scf_df.append(scf_iss_df, ignore_index=True)
+
+    issue_ints = scf_df['issue_id'].values
+    issue_ints[np.where(issue_ints == 'other')[0]] = -1
+    new_ints = [int(i) for i in issue_ints]
+    scf_df['int_issue_id'] = new_ints
 
     return scf_df
 
