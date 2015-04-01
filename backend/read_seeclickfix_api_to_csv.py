@@ -109,14 +109,19 @@ def read_issues(scf_cat_df, readfile=False):
     return scf_df
 
 
-def write_to_csv(scf_df):
+def write_to_csv(scf_df, outname):
     """PURPOSE:
         To write the contents to CSV
     """
-    scf_df.to_csv(nhrc2dir+'data/scf_data_full.csv', sep=',', encoding='utf-8')
+    if outname != '':
+        outname = outname
+    else:
+        outname = nhrc2dir+'data/scf_data_full.csv'
+
+    scf_df.to_csv(outname, sep=',', encoding='utf-8')
 
 
-def read_seeclickfix_api_to_csv(readfile=False, donotwrite=False):
+def read_seeclickfix_api_to_csv(readfile=False, donotwrite=False, outname=''):
     """PURPOSE:
         To read in all the New Haven data from the see click fix API
         for New Haven and write it to CSV. The data will be visualized
@@ -129,7 +134,7 @@ def read_seeclickfix_api_to_csv(readfile=False, donotwrite=False):
     scf_df = read_issues(scf_cat_df, readfile=readfile)
 
     if not donotwrite:
-        write_to_csv(scf_df)
+        write_to_csv(scf_df, outname)
 
 
 if __name__ == '__main__':
@@ -145,6 +150,10 @@ if __name__ == '__main__':
         help='This routine is intended to write the data read in from SCF' +
              'to a CSV. If you want to test it by reading in ' +
              'data but NOT writing to CSV, set --donotwrite.', action="store_true")
+    parser.add_argument(
+        '--outname',
+        help='Set this if you want to specify the output filename. ',
+             type=str)
 
     args = parser.parse_args()
 
@@ -158,4 +167,9 @@ if __name__ == '__main__':
     else:
         donotwrite = True
 
-    read_seeclickfix_api_to_csv(readfile=readfile, donotwrite=donotwrite)
+    if args.outname:
+        outname = outname
+    else:
+        outname = ''
+
+    read_seeclickfix_api_to_csv(readfile=readfile, donotwrite=donotwrite, outname=outname)
