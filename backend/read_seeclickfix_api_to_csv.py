@@ -163,9 +163,9 @@ if __name__ == '__main__':
         readfile = False
 
     if args.donotwrite:
-        donotwrite = False
-    else:
         donotwrite = True
+    else:
+        donotwrite = False
 
     if args.outname:
         outname = outname
