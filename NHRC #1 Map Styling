@@ -1,0 +1,135 @@
+############# SQL:
+
+SELECT *, DATE_PART('day', NOW() - created_at) AS n_open, DATE(created_at) as create_date
+FROM scf_data
+WHERE status IN ('Open') 
+
+
+############ CSS
+
+#scf_2014_nhv_service_request_data{
+  marker-fill-opacity: 0.5;
+  marker-line-color: black;
+  marker-line-width: 1.5;
+  marker-line-opacity: 0.5;
+  marker-placement: point;
+  marker-multi-policy: largest;
+  marker-type: ellipse;
+  marker-allow-overlap: true;
+  marker-clip: false;
+}
+#scf_2014_nhv_service_request_data [ n_open <= 360] {
+   marker-width: 50.0;
+}
+#scf_2014_nhv_service_request_data [ n_open <= 330] {
+   marker-width: 45.0;
+}
+#scf_2014_nhv_service_request_data [ n_open <= 300] {
+   marker-width: 40.0;
+}
+#scf_2014_nhv_service_request_data [ n_open <= 270] {
+   marker-width: 35.0;
+}
+#scf_2014_nhv_service_request_data [ n_open <= 240] {
+   marker-width: 30.0;
+}
+#scf_2014_nhv_service_request_data [ n_open <= 210] {
+   marker-width: 25.0;
+}
+#scf_2014_nhv_service_request_data [ n_open <= 180] {
+   marker-width: 20.0;
+}
+#scf_2014_nhv_service_request_data [ n_open <= 120] {
+   marker-width: 15.0;
+}
+#scf_2014_nhv_service_request_data [ n_open <= 90] {
+   marker-width: 10.0;
+}
+#scf_2014_nhv_service_request_data [ n_open <= 60] {
+   marker-width: 5.0;
+}
+#scf_2014_nhv_service_request_data [ n_open <= 30] {
+   marker-width: 1.0;
+}
+/** category visualization */
+
+#scf_2014_nhv_service_request_data[category="Street Lamp"] {
+   marker-fill: #9b001c;
+}
+#scf_2014_nhv_service_request_data[category="Tree Trimming"] {
+   marker-fill: #70ED3B;
+}
+#scf_2014_nhv_service_request_data[category="Public Space, Streets and Drains"] {
+   marker-fill: #006c51;
+}
+#scf_2014_nhv_service_request_data[category="Policing Issue"] {
+   marker-fill: #35D2Ab;
+}
+#scf_2014_nhv_service_request_data[category="Traffic/Road Safety"] {
+   marker-fill: #EF002a;
+}
+#scf_2014_nhv_service_request_data[category="Private Property Issue"] {
+   marker-fill: #FF5F00;
+}
+#scf_2014_nhv_service_request_data[category="Potholes"] {
+   marker-fill: #00a67c;
+}
+#scf_2014_nhv_service_request_data[category="Trash & Recycling"] {
+   marker-fill: #4ea429;
+}
+#scf_2014_nhv_service_request_data {
+   marker-fill: #ffa773;
+}
+
+
+################################ HTML
+
+<div class='cartodb-legend category'>	
+<div class="legend-title">Incident Type</div>
+<ul>
+	<li>
+		<div class="bullet" style="background: #9b001c"></div> Street Lamp
+	</li>
+	<li>
+		<div class="bullet" style="background: #70ED3B"></div> Tree Trimming
+	</li>
+	<li>
+		<div class="bullet" style="background: #006c51"></div> Public Space, Streets and Drains
+	</li>
+	<li>
+		<div class="bullet" style="background: #35D2Ab"></div> Policing Issue
+	</li>
+	<li>
+		<div class="bullet" style="background: #ef002a"></div> Traffic/Road Safety
+	</li>
+	<li>
+		<div class="bullet" style="background: #FF5F00"></div> Private Property Issue
+	</li>
+	<li>
+		<div class="bullet" style="background: #00a67c"></div> Potholes
+	</li>
+	<li>
+		<div class="bullet" style="background: #4ea429"></div> Trash &amp; Recycling
+	</li>
+	<li>
+	<div class="bullet" style="background: #ffa773"></div> Others
+	</li>
+</ul>
+</div>
+<div class='cartodb-legend bubble'>	
+<div class="legend-title">Number of Days Open</div>
+<ul>
+  <li>
+    &lt; 30
+  </li>
+	<li class="graph" style="background: rgb(0, 0, 0);">
+		<div class="bubbles"></div>
+	</li>
+  <li>
+    &gt; 360
+  </li>
+</ul>
+</div>
+</div>
+
+
