@@ -93,9 +93,17 @@
 <!-- body -->
 <body class="col-xs-12">
     <div class='navbar navbar-default navbar-static-top'>
-      <div class='container'>
+      <div class='container-fluid'>
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
         <a href='/nhrc' class='navbar-brand'>New Haven Report Card</a>
+    </div>
 
+        <div class="collapse navbar-collapse" id="myNavbar">
         <ul class='nav navbar-nav navbar-right'>
           <li><a href='http://seeclickfix.com' target='new'>Dashboard</a></li>
           <li><a href='map.html' target='new'>Incident Type Map</a></li>
@@ -103,6 +111,7 @@
           <li><a href='http://cdb.io/19bHFJ5' target='new'>Incident Evolution Map</a></li>
           <li><a href='http://blakeelias.github.io/nhrc/chart.html' target='new'>Response Time</a></li>
         </ul>
+        </div>
       </div>
     </div>
 <!-- end of navbar -->
