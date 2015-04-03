@@ -6,3 +6,4 @@ This is the repository for the New Haven Report Card. The New Haven Report Card 
 ###Data Sources
 - The New Haven Report Card would not be possible without the [SeeClickFix](http://en.seeclickfix.com/new-haven) [API](http://dev.seeclickfix.com)
 - City of New Haven Aldermanic Wards from [data.ct.gov](https://data.ct.gov/Government/City-of-New-Haven-Aldermanic-Wards/nki6-723a)
+- Connecticut Census Blocks from [http://magic.lib.uconn.edu/connecticut_data.html] (http://magic.lib.uconn.edu/magic_2/vector/37800/blockct_37800_0000_2010_s100_census_1_shp.zip)
