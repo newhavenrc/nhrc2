@@ -1,0 +1,197 @@
+.features .glyphicon {
+  font-size: 32px;
+}
+
+body {
+  padding-bottom: 70px;
+  font-family: "Clear Sans";
+  background-color: #fff;
+  width: 100%;
+  min-height: 100%;
+  height: 100%;
+  font-size: 15px;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+
+.remove-padding{
+  padding:0px !important;
+}
+
+.certification-header{
+  padding:10px;
+}
+
+.simple-bar-with-heading{
+  padding: 10px;
+}
+
+.grades{
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.d3-window {
+  border-radius: 5px;
+  border: 2px solid;
+  border-color: #999;
+}
+
+.footer {
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 50px;
+  margin-top: 100px;
+}
+.footer {
+  color: #efefef;
+  background-color: #333;
+}
+.footer a {
+  color: #9af7fe;
+}
+
+.footer .glyphicon {
+  font-size: 14px;
+}
+
+.spacer {
+  margin-top: 40px;
+}
+
+.spacer-bottom {
+  margin-bottom: 150px;
+}
+
+.quote {
+  background-color: #444;
+  color: #e1e1e1;
+  margin: 2em 0;
+}
+.quote blockquote {
+  border: none;
+  margin: 0;
+}
+.quote footer {
+  color: #c1c1c1;
+}
+
+.overall-grade {
+  border: 1px solid #cccccc;
+  border-radius: 3px;
+  box-sizing: border-box;
+  padding: 15px;
+  height: 447px;
+}
+
+.project-certification {
+  box-sizing: border-box;
+  padding: 15px;
+}
+
+.project-certification .simple-bars-wrapper .bars-column {
+  vertical-align: top;
+  box-sizing: border-box;
+  display: inline-block;
+}
+
+.project-certification .simple-bars-wrapper .bars-column .simple-bar-with-heading {
+  width: 100%;
+  display: inline-block;
+  border-bottom: 1px solid #ddd;
+  box-sizing: border-box;
+  padding: 0 0 16px 0;
+}
+
+.project-certification .simple-bars-wrapper .bars-column .simple-bar-with-heading .simple-bar-body {
+  height: 30px;
+  line-height: 35px;
+}
+
+.project-certification .simple-bars-wrapper .bars-column .simple-bar-with-heading .simple-bar-header {
+  box-sizing: border-box;
+  margin: 16px 0 2px 0;
+}
+
+.project-certification .simple-bars-wrapper .vertical-separator {
+  display: inline-block;
+  border-right: 1px solid #ddd;
+  height: 322px;
+  margin: 0 20px;
+}
+
+.project-certification .simple-bars-wrapper .bars-column .simple-bar-with-heading .simple-bar-body .progress {
+  display: inline-block;
+  margin-bottom: 0;
+  width: 100%;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.project-certification .simple-bars-wrapper .bars-column {
+  vertical-align: top;
+  box-sizing: border-box;
+  display: inline-block;
+}
+
+.project-certification .certification-header .certification-title {
+  display: inline-block;
+  font-family: "Clear Sans";
+  font-size: 18px;
+  font-weight: 400;
+  margin-left: 20px;
+  vertical-align: super;
+}
+
+span[class^="grade-"].large {
+  font-family: "Open Sans",sans-serif;
+  text-align: center;
+  display: inline-block;
+  border-radius: 50%;
+  color: #fff;
+  width: 72px;
+  height: 72px;
+  font-size: 40px;
+  line-height: 72px;
+}
+
+.grade-A {
+  font-family: "Open Sans",sans-serif;
+  text-align: center;
+  display: inline-block;
+  border-radius: 50%;
+  color: #fff;
+  width: 90px;
+  height: 90px;
+  font-size: 50px;
+  line-height: 90px;
+  background-color: #26d598;
+  stroke: #26d598;
+  fill: #26d598;
+}
+
+.project-certification .simple-bars-wrapper .bars-column .simple-bar-with-heading .simple-bar-body .percentage {
+  display: inline-block;
+  font-family: "Bebas Neue";
+  float: right;
+  margin-right: 8px;
+}
+
+.project-certification .simple-bars-wrapper .bars-column .simple-bar-with-heading .simple-bar-body .progress.simple-bar-A .progress-bar-primary {
+  background: #26d598;
+}
+
+.project-certification .simple-bars-wrapper .bars-column .simple-bar-with-heading .simple-bar-header .header-name {
+  font-size: 14px;
+  color: #2c3e50;
+  font-weight: bold;
+}
+
+.project-certification .simple-bars-wrapper .bars-column .simple-bar-with-heading .simple-bar-header .simple-bar-info {
+  color: #ccc;
+}
+
+.project-certification .simple-bars-wrapper .bars-column .simple-bar-with-heading .simple-bar-body .percentage .percentage-value {
+  font-size: 20px;
+}
