@@ -92,10 +92,48 @@
 
 <!-- body -->
 <body class="col-xs-12">
+    <div class='navbar navbar-default navbar-static-top'>
+      <div class='container'>
+        <a href='/nhrc' class='navbar-brand'>New Haven Report Card</a>
+
+        <ul class='nav navbar-nav navbar-right'>
+          <li><a href='http://seeclickfix.com' target='new'>Dashboard</a></li>
+          <li><a href='map.html' target='new'>Incident Type Map</a></li>
+          <li><a href='map2.html' target='new'>Incident Number Map</a></li>
+          <li><a href='http://cdb.io/19bHFJ5' target='new'>Incident Evolution Map</a></li>
+          <li><a href='http://blakeelias.github.io/nhrc/chart.html' target='new'>Response Time</a></li>
+          <li><a href='http://seeclickfix.com' target='new'>See Click Fix</a></li>
+        </ul>
+      </div>
+    </div>
+<!-- end of navbar -->
 
     <div id="cartodbmapcontainer">
         <div id="map"></div>
     </div>
+
+<!-- footer section -->
+
+<div class="container">
+  <div class="row spacer-bottom"></div>
+</div>
+
+
+<!-- footer -->
+<div class='footer navbar navbar-fixed-bottom'>
+  <div class='container'>
+    <div class='row'>
+      <div class="col-md-4 pull-right">
+        <a href='http://seeclickfix.com' target='new'>
+        <div class="scf-power text-center">
+          Powered by <span class="scf-logo"><span class='scf-see'>See</span><span class="scf-click">Click</span><span class="scf-fix">Fix</span></span>
+        </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
 
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
     <script src='js/bootstrap.min.js'></script>

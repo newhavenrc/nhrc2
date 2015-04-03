@@ -56,6 +56,51 @@ body {
   font-size: 14px;
 }
 
+.scf-power {
+  padding-top: 10px;
+  font-family: Tahoma,Geneva,Arial,sans-serif;
+  font-size: 18px;
+  font-weight: normal;
+  line-height: 30px;
+} 
+
+a:link {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:visited {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:hover {
+    text-decoration: bold;
+}
+
+a:active {
+    text-decoration: none;
+}
+
+.scf-logo {
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 30px;
+
+}
+
+.scf-see {
+  color: #5E5F5F;
+}
+
+.scf-click {
+  color: #F17639;
+}
+
+.scf-fix {
+  color: #3990B8;
+}
+
 .spacer {
   margin-top: 40px;
 }
