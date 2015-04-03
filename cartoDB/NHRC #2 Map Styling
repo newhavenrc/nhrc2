@@ -1,0 +1,183 @@
+#SQL
+SELECT *,
+    --total number of cases
+    (SELECT COUNT(*)
+    FROM scf_data
+    WHERE ST_Intersects(scf_data.the_geom, nh_census_blocks.the_geom)) TOTAL,
+    --cases that have been closed
+    (SELECT SUM(CASE WHEN closed_at is not null THEN 1 ELSE 0 END)
+    FROM scf_data
+    WHERE ST_Intersects(scf_data.the_geom, nh_census_blocks.the_geom)) CLOSED,
+    --percent of total cases that have been closed
+    (SELECT CAST(SUM(CASE WHEN closed_at is not null THEN 1 ELSE 0 END) AS DECIMAL) / COUNT(*) * 100
+    FROM scf_data
+    WHERE ST_Intersects(scf_data.the_geom, nh_census_blocks.the_geom)) PERCENT_CLOSED
+FROM nh_census_blocks
+WHERE 
+  (SELECT ST_Extent(the_geom) FROM nh_wards) && the_geom
+
+
+
+# CSS
+#nh_census_blocks{
+  polygon-fill: #FFFFFF;
+  polygon-opacity: 0;
+  line-color: #000000;
+  line-width: 1;
+  line-opacity: 0.25;
+}
+
+/** bubble visualization */
+
+#nh_census_blocks{
+  marker-fill-opacity: 0.75;
+  marker-line-color: #FFF;
+  marker-line-width: 1.5;
+  marker-line-opacity: 0;
+  marker-placement: point;
+  marker-multi-policy: largest;
+  marker-type: ellipse;
+  marker-allow-overlap: true;
+  marker-clip: false;
+}
+#nh_census_blocks [ total > 100] {
+   marker-width: 44.0;
+}
+#nh_census_blocks [ total <= 100] {
+   marker-width: 40.0;
+}
+#nh_census_blocks [ total <= 90] {
+   marker-width: 36.0;
+}
+#nh_census_blocks [ total <= 80] {
+   marker-width: 32.0;
+}
+#nh_census_blocks [ total <= 70] {
+   marker-width: 28.0;
+}
+#nh_census_blocks [ total <= 60] {
+   marker-width: 24.0;
+}
+#nh_census_blocks [ total <= 50] {
+   marker-width: 20.0;
+}
+#nh_census_blocks [ total <= 40] {
+   marker-width: 16.0;
+}
+#nh_census_blocks [ total <= 30] {
+   marker-width: 12.0;
+}
+#nh_census_blocks [ total <= 20] {
+   marker-width: 8.0;
+}
+#nh_census_blocks [ total <= 10] {
+   marker-width: 4.0;
+}
+
+
+
+#nh_neighborhoods [ percent_closed <= 100] {
+   marker-fill: #FFFFB2;
+}
+#nh_neighborhoods [ percent_closed <= 80] {
+   marker-fill: #FEB24C;
+}
+#nh_neighborhoods [ percent_closed <=60] {
+   marker-fill: #FC4E2A;
+}
+#nh_neighborhoods [ percent_closed <= 40] {
+   marker-fill: #E31A1C;
+}
+#nh_neighborhoods [ percent_closed <= 20] {
+   marker-fill: #B10026;
+}
+#nh_neighborhoods [ percent_closed = null] {
+   marker-fill:#FFFFFF;
+   marker-opacity: 0.0;
+}
+
+
+# HTML
+
+<div class='cartodb-legend bubble'>	
+
+<div class="legend-title">Number of Incidents Reported</div>
+
+
+<ul>
+	
+	
+	
+	<li class="graph" style="background: #B10026;">
+
+
+
+		<div class="bubbles"></div>
+
+	
+	</li>
+
+</ul>
+
+
+
+</div>
+
+<div class='cartodb-legend choropleth'>	
+<div class="legend-title">Percent of Incidents Resolved</div>
+
+
+
+<ul>
+	
+	
+	
+	<li class="min">
+
+
+
+		10%
+	
+	
+	
+	</li>
+	
+	
+	
+	<li class="max">
+
+
+
+		70%
+	
+	
+	
+	</li>
+	
+	
+	
+	<li class="graph count_441">
+
+
+
+	<div class="colors">
+	<div class="quartile" style="background-color:#B10026"></div>
+	<div class="quartile" style="background-color:#E31A1C"></div>
+	<div class="quartile" style="background-color:#FC4E2A"></div>
+	<div class="quartile" style="background-color:#FD8D3C"></div>
+	<div class="quartile" style="background-color:#FEB24C"></div>
+	<div class="quartile" style="background-color:#FED976"></div>
+	<div class="quartile" style="background-color:#FFFFB2"></div>
+	</div>
+	
+	
+	
+	</li>
+
+
+
+</ul>
+
+
+
+</div>
