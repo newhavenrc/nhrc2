@@ -91,6 +91,8 @@
   </head>
 
 <!-- body -->
+
+<!-- beginning of navbar -->
 <body class="col-xs-12">
     <div class='navbar navbar-default navbar-static-top'>
       <div class='container-fluid'>
@@ -116,6 +118,79 @@
     </div>
 <!-- end of navbar -->
 
+<!-- button section -->
+<div class="container">
+  <div class="row">
+  <div class="text-center">
+    <div class='btn-group' role='group'>
+      <div class='btn-group' role='group'>
+        <button type='button' class="btn btn-default dropdown-toggle" data-toggle='dropdown' aria-expanded='false'>
+          Time Coverage
+          <span class='caret'></span>
+          <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu">
+          <li id='Tm-Cvrg-All' class="tmcov-opt">All</li>
+          <li id='Tm-Cvrg-Yr' class="tmcov-opt">Past Year</li>
+          <li id='Tm-Cvrg-Mnth' class="tmcov-opt">Past Month</li>
+          <li id='Tm-Cvrg-Wk' class="tmcov-opt">Past Week</li>
+        </ul>
+      </div>
+    <div class='btn-group' role='group'>
+      <div class='btn-group' role='group'>
+        <button type='button' class="btn btn-default dropdown-toggle" data-toggle='dropdown' aria-expanded='false'>
+          Category
+          <span class='caret'></span>
+          <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu">
+          <li id='Tm-Cvrg-All' class="tmcov-opt">All</li>
+          <li id='Tm-Cvrg-Yr' class="tmcov-opt">Past Year</li>
+          <li id='Tm-Cvrg-Mnth' class="tmcov-opt">Past Month</li>
+          <li id='Tm-Cvrg-Wk' class="tmcov-opt">Past Week</li>
+        </ul>
+      </div>
+      <div class='btn-group' role='group'>
+        <button type='button' class="btn btn-default dropdown-toggle" data-toggle='dropdown' aria-expanded='false'>
+          Neighborhood
+          <span class='caret'></span>
+          <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu">
+          <li id='Nbrhd-amity' class="nbrhd-opt">Amity</li>
+          <li id='Nbrhd-annex' class="nbrhd-opt">Annex</li>
+          <li id='Nbrhd-beaverhills' class="nbrhd-opt">Beaver Hills</li>
+          <li id='Nbrhd-dixwell' class="nbrhd-opt">Dixwell</li>
+          <li id='Nbrhd-downtown' class="nbrhd-opt">Downtown</li>
+          <li id='Nbrhd-dwight' class="nbrhd-opt">Dwight</li>
+          <li id='Nbrhd-eastrock' class="nbrhd-opt">East Rock</li>
+          <li id='Nbrhd-eastshore' class="nbrhd-opt">East Shore</li>
+          <li id='Nbrhd-edgewood' class="nbrhd-opt">Edgewood</li>
+          <li id='Nbrhd-fairhaven' class="nbrhd-opt">Fair Haven</li>
+          <li id='Nbrhd-fairhavenheights' class="nbrhd-opt">Fair Haven Heights</li>
+          <li id='Nbrhd-hill' class="nbrhd-opt">Hill</li>
+          <li id='Nbrhd-longwharf' class="nbrhd-opt">Long Wharf</li>
+          <li id='Nbrhd-newhallville' class="nbrhd-opt">Newhallville</li>
+          <li id='Nbrhd-prospecthill' class="nbrhd-opt">Prospect Hill</li>
+          <li id='Nbrhd-quinnipiac' class="nbrhd-opt">Quinnipiac</li>
+          <li id='Nbrhd-westriver' class="nbrhd-opt">West River</li>
+          <li id='Nbrhd-westrock' class="nbrhd-opt">West Rock</li>
+          <li id='Nbrhd-westville' class="nbrhd-opt">Westville</li>
+          <li id='Nbrhd-woostersquare' class="nbrhd-opt">Wooster Square/Mill River</li>
+        </ul>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row spacer"></div>
+</div>
+
+
+
+<!-- cartodb map section -->    
     <div id="cartodbmapcontainer">
         <div id="map"></div>
     </div>
