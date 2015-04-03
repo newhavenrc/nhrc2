@@ -102,7 +102,6 @@
           <li><a href='map2.html' target='new'>Incident Number Map</a></li>
           <li><a href='http://cdb.io/19bHFJ5' target='new'>Incident Evolution Map</a></li>
           <li><a href='http://blakeelias.github.io/nhrc/chart.html' target='new'>Response Time</a></li>
-          <li><a href='http://seeclickfix.com' target='new'>See Click Fix</a></li>
         </ul>
       </div>
     </div>
