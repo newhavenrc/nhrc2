@@ -101,7 +101,6 @@ def read_issues(scf_cat_df, readfile=False, writejson=False):
     for i in scf_cat_df.index:
         print(scf_cat_df.loc[i, 'title'], scf_cat_df.loc[i, 'type'])
         issurl = 'https://seeclickfix.com/api/v2/issues?request_types='+scf_cat_df.loc[i, 'type']+'&per_page=10000'
-        json_data = json.load(urllib2.urlopen(issurl))
 
         if readfile:
             json_data = json.load(open(nhrc2dir+'data/scf_data_iss'+scf_cat_df.loc[i, 'type']+'.json', 'r'))
