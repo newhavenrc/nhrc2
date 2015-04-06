@@ -1,5 +1,5 @@
 <?php
-    ini_set('memory_limit', '256M');
+    //ini_set('memory_limit', '256M');
     //$afspath = $_SERVER["AeroFSdir"];
     $pltpar = $_GET['param'];
     $sqltblnm = $_GET['tablenm'];
@@ -55,21 +55,15 @@
     }
 
 
-    if ($tmCovrg =='Smpl-Daily') {
+    if ($tmCovrg =='Tm-Cvrg-Yr') {
         $myquery = "
         SELECT sampleTime as date, ccdSetpoint FROM environ WHERE sampleTime > '" . $begDate . "' AND sampleTime < '" . $endDate . "' AND MINUTE(sampleTime) < 2 AND HOUR(sampleTime) < 1  ORDER BY sampleTime ASC;
         ";   
     }
 
-    if ($tmCovrg =='Smpl-Hourly') {
+    if ($tmCovrg =='Tm-Cvrg-All') {
         $myquery = "
-        SELECT sampleTime as date, gratingTemp, tableCenterTemp, enclosureTemp, iodineCellTemp, enclosureSetpoint, iodineCellSetpoint, enclosureTemp2, tableTempLow, structureTemp, instrumentSetpoint, instrumentTemp, coudeTemp, heaterSetpoint, barometer, echellePressure, ccdTemp, neckTemp, ccdSetpoint FROM environ WHERE sampleTime > '" . $begDate . "' AND sampleTime < '" . $endDate . "' AND MINUTE(sampleTime) < 2 ORDER BY sampleTime ASC;
-        ";   
-    }
-
-    if ($tmCovrg =='Smpl-All') {
-        $myquery = "
-        SELECT sampleTime as date, gratingTemp, tableCenterTemp, enclosureTemp, iodineCellTemp, enclosureSetpoint, iodineCellSetpoint, enclosureTemp2, tableTempLow, structureTemp, instrumentSetpoint, instrumentTemp, coudeTemp, heaterSetpoint, barometer, echellePressure, ccdTemp, neckTemp, ccdSetpoint FROM environ WHERE sampleTime > '" . $begDate . "' AND sampleTime < '" . $endDate . "' ORDER BY sampleTime ASC;
+        SELECT created_at, category, neighborhood FROM nhrc ORDER BY created_at ASC;
         ";   
     }
 
