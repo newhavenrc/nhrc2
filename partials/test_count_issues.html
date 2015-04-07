@@ -21,8 +21,54 @@
       text.axis-worktime {
         fill: #000;
       }
+
+      .d3-nbrhd-tip {
+        line-height: 1;
+        font-family: Consolas, courier;
+        font-weight: bold;
+        padding: 3px;
+        background: #ffffff;
+        color: #aaa;
+        border-radius: 2px;
+        border-color: #aaa;
+      }
+
+      /* Creates a small triangle extender for the tooltip */
+      .d3-nbrhd-tip:after {
+        box-sizing: border-box;
+        display: inline;
+        font-size: 10px;
+        width: 100%;
+        line-height: 1;
+        color: #aaa;
+        content: "\25BC";
+        position: absolute;
+        text-align: center;
+      }
+
+      /* Style northward tooltips differently */
+      .d3-nbrhd-tip.n:after {
+        margin: -1px 0 0 0;
+        top: 100%;
+        left: 0;
+
+      }
+
+      .d3-cell-tip {
+        line-height: 1;
+        font-family: Consolas, courier;
+        font-weight: bold;
+        padding: 3px;
+        background: #ffffff;
+        color: #aaa;
+        border-radius: 2px;
+        border-color: #aaa;
+      }
+
+
     </style>
     <script src="../js/d3.min.js"></script>
+    <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
     <script src="../js/colorbrewer.js"></script>
     <script src="../js/jquery-2.1.3.min.js"></script>
   </head>
@@ -31,16 +77,18 @@
     Hello
 
     <script type="text/javascript">
-      var margin = { top: 50, right: 0, bottom: 100, left: 300 },
-          width = 960 - margin.left - margin.right,
-          height = 900 - margin.top - margin.bottom,
-          gridSize = Math.floor(width / 24),
+      var catnumber = 24;
+      var gridSize = 30;
+      var margin = { top: 50, right: 0, bottom: 100, left: 150 },
+          width = 900 - margin.left - margin.right,
+          height = 920 - margin.top - margin.bottom,
+          //gridSize = Math.floor(width / catnumber),
           legendElementWidth = gridSize*2,
           buckets = 7,
           //colors = ["#ffffd9","#edf8b1","#c7e9b4","#7fcdbb","#41b6c4","#1d91c0","#225ea8","#253494","#081d58"], // alternatively colorbrewer.YlGnBu[9]
           colors = colorbrewer.YlGnBu[7],
           //categorylabels = ["Potholes", "Trash", "Signs", "Health", "Property", "Graffiti", "Policing"],
-          nbrhdlabels = ["ALL", "AMT", "BVH", "DXW", "DTN", "DGT", "ERK", "ESH", "EDG", "FHV", "FHH", "HLL", "LWF", "NHL", "PSH", "QNP", "WRV", "WRK", "WVL", "WOO"];
+          nbrhdlabels = ["AMT", "ANX", "BVH", "DXW", "DTN", "DGT", "ERK", "ESH", "EDG", "FHV", "FHH", "HLL", "LWF", "NHL", "OTH", "PSH", "QNP", "WRV", "WRK", "WVL", "WOO"];
 
       var neighborhoods = [
         "Amity",
@@ -93,6 +141,13 @@
         "Tree Trimming"
       ]
 
+      var catlabels = ['Bins', 'Bus', 'Graffiti', 'Hangers', 'Health',
+                       'Dumping', 'Other', 'City Request', 'Parking',
+                       'Parks', 'Policing', 'To Neighbors', 'Potholes',
+                       'Private Property', 'Public Space', 'Volunteers',
+                       'Sidewalks', 'Signs', 'Snow', 'Street Lamps',
+                       'Traffic', 'Signals', 'Trash', 'Trees']
+
       console.log(neighborhoods);
       console.log(' ');
       console.log(categories);
@@ -126,6 +181,33 @@
       */
 
       //begin d3 section
+
+      var nbrhdtip = d3.tip()
+        .attr('class', 'd3-nbrhd-tip')
+        .offset([-10, 0])
+        .html(function(d) {
+          return "<span style='color:#aaa'>" + d.fullname + "</span>";
+        })
+
+      var celltip = d3.tip()
+        .attr('class', 'd3-cell-tip')
+        .offset([-10, 0])
+        .html(function(d) {
+          return "Neighborhood: " + d.neighborhoodname + "<br />"+
+                 "Category: " + d.categoryname + "<br />"+
+                 "Issues: " + d.count + "<br />";
+        })
+
+        var svg = d3.select("#chart").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      svg.call(nbrhdtip);
+      svg.call(celltip);
+
+
       d3.json("http://localhost/nhrc2/php/HeatmapData.php?tmCovrg=Tm-Cvrg-All", function(error, data) {
         if (error) return console.warn(error);
         //console.log(data);
@@ -145,7 +227,11 @@
             neighborhoodarr.push(i);
             categoriesarr.push(j);
             issuecountarr.push(heatdata[neighborhoods[i]][categories[j]]);
-            heatdataarr.push({'neighborhoodnum': i, 'categorynum': j, 'count': heatdata[neighborhoods[i]][categories[j]]});
+            heatdataarr.push({'neighborhoodnum': i,
+                              'categorynum': j, 
+                              'count': heatdata[neighborhoods[i]][categories[j]],
+                              'neighborhoodname': neighborhoods[i],
+                              'categoryname': categories[j]});
           }
         }
         heatdataout['neighborhoodnum'] = neighborhoodarr;
@@ -161,34 +247,42 @@
         //console.log(colorScale);
 
 
-        var svg = d3.select("#chart").append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
-            .append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        catlist = [];
+        for (i=0; i < categories.length; i++){
+          catlist.push({'abbreviation': catlabels[i], 'fullname': categories[i]});
+        }
 
         var catLabels = svg.selectAll(".catLabel")
-            .data(categories)
+            .data(catlist)
             .enter().append("text")
-              .text(function (d) { return d; })
+              .text(function (d) { return d.abbreviation; })
               .attr("x", 0)
               .attr("y", function (d, i) { return i * gridSize; })
               .style("text-anchor", "end")
               .attr("transform", "translate(-6," + gridSize / 1.5 + ")")
-              .attr("class", function (d, i) { return "dayLabel mono axis"; });
+              .attr("class", function (d, i) { return "dayLabel mono axis"; })
+              .on('mouseover', nbrhdtip.show)
+              .on('mouseout', nbrhdtip.hide);
+
+          nbrhoodlist = [];
+          for (i=0; i < nbrhdlabels.length; i++){
+            nbrhoodlist.push({'abbreviation': nbrhdlabels[i], 'fullname': neighborhoods[i]});
+          }
 
           var nbrhdLabels = svg.selectAll(".nbrhdLabel")
-              .data(nbrhdlabels)
+              .data(nbrhoodlist)
               .enter().append("text")
-                .text(function(d) { return d; })
-                .attr("x", function(d, i) { return i * gridSize; })
-                .attr("y", 0)
-                .style("text-anchor", "middle")
-                .attr("transform", "translate(" + gridSize / 2 + ", -6)")
-                .attr("class", function(d, i) { return "timeLabel mono axis"; });
+              .text(function(d) { return d.abbreviation; })
+              .attr("x", function(d, i) { return i * gridSize; })
+              .attr("y", 0)
+              .style("text-anchor", "middle")
+              .attr("transform", "translate(" + gridSize / 2 + ", -6)")
+              .attr("class", function(d, i) { return "timeLabel mono axis"; })
+              .on('mouseover', nbrhdtip.show)
+              .on('mouseout', nbrhdtip.hide);
 
-          console.log(heatdataout);
-          console.log(heatdataarr);
+          //console.log(heatdataout);
+          //console.log(heatdataarr);
           //console.log('neighborhoodnum: ');
           //console.log(heatdataout.neighborhoodnum);
           //console.log('categorynum: ');
@@ -201,18 +295,44 @@
                 return (+d.neighborhoodnum) * gridSize;
               })
               .attr("y", function(d) { return (+d.categorynum) * gridSize; })
-              .attr("rx", 4)
-              .attr("ry", 4)
+              //.attr("rx", 4)
+              //.attr("ry", 4)
               .attr("class", "issuecell bordered")
               .attr("width", gridSize)
               .attr("height", gridSize)
-              .style("fill", colors[0]);
+              .style("fill", colors[0])
+              .on('mouseover', celltip.show)
+              .on('mouseout', celltip.hide);
+
 
           heatMap.transition().duration(1000)
               .style("fill", function(d) { return colorScale(d.count); });
 
-          heatMap.append("title").text(function(d) { return d.count; });
+          //heatMap.append("text").text(function(d) { return d.count; });
 
+          var legend = svg.selectAll(".legend")
+              .data([0].concat(colorScale.quantiles()), function(d) { return d; })
+              .enter().append("g")
+              .attr("class", "legend");
+
+          legend.append("rect")
+            .attr("x", function(d, i) { return legendElementWidth * i; })
+            .attr("y", height - 20)
+            .attr("width", legendElementWidth)
+            .attr("height", gridSize / 2)
+            .style("fill", function(d, i) { return colors[i]; });
+
+          legend.append("text")
+            .attr("class", "mono")
+            .text(function(d) { return "≥ " + Math.round(d); })
+            .attr("x", function(d, i) { return legendElementWidth * i + 15; })
+            .attr("y", height + gridSize - 20);
+
+          legend.append("text")
+            .attr("class", "mono")
+            .text("Number of Issues")
+            .attr("x", legendElementWidth * 2.5)
+            .attr("y", height + 25);
 
       });
       //end d3 section
