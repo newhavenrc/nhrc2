@@ -37,7 +37,7 @@
 
         <div class="collapse navbar-collapse" id="myNavbar">
         <ul class='nav navbar-nav navbar-right'>
-          <li><a href='http://seeclickfix.com' target='new'>Dashboard</a></li>
+          <li><a href='http://seeclickfix.com' target='new'>Overview</a></li>
           <li><a href='map.html' target='new'>Incident Type Map</a></li>
           <li><a href='map2.html' target='new'>Incident Number Map</a></li>
           <li><a href='http://cdb.io/19bHFJ5' target='new'>Incident Evolution Map</a></li>
@@ -59,11 +59,11 @@
           <span class='caret'></span>
           <span class="sr-only">Toggle Dropdown</span>
         </button>
-        <ul class="dropdown-menu">
-          <li id='Tm-Cvrg-All' class="tmcov-opt">All</li>
-          <li id='Tm-Cvrg-Yr' class="tmcov-opt">Past Year</li>
-          <li id='Tm-Cvrg-Mnth' class="tmcov-opt">Past Month</li>
-          <li id='Tm-Cvrg-Wk' class="tmcov-opt">Past Week</li>
+        <ul class="dropdown-menu" role="menu">
+          <li id='Tm-Cvrg-All' class="tmcov-opt"><a href="#">All</a></li>
+          <li id='Tm-Cvrg-Yr' class="tmcov-opt"><a href="#">Past Year</a></li>
+          <li id='Tm-Cvrg-Mnth' class="tmcov-opt"><a href="#">Past Month</a></li>
+          <li id='Tm-Cvrg-Wk' class="tmcov-opt"><a href="#">Past Week</a></li>
         </ul>
       </div>
     <div class='btn-group' role='group'>
@@ -73,33 +73,33 @@
           <span class='caret'></span>
           <span class="sr-only">Toggle Dropdown</span>
         </button>
-        <ul class="dropdown-menu">
-          <li id='Cat-all' class="ctg-opt">All</li>
-          <li id='Cat-bins' class="ctg-opt">Bins for Trash And Recycling</li>
-          <li id='Cat-generalbus' class="ctg-opt">General Bus Request/Incident</li>
-          <li id='Cat-graffiti' class="ctg-opt">Graffiti</li>
-          <li id='Cat-hangers' class="ctg-opt">Hangers</li>
-          <li id='Cat-healthcomplaints' class="ctg-opt">Health Complaints</li>
-          <li id='Cat-illegaldumping' class="ctg-opt">Illegal Dumping</li>
-          <li id='Cat-other' class="ctg-opt">Other</li>
-          <li id='Cat-othercity' class="ctg-opt">Other - city responsibility</li>
-          <li id='Cat-parkingmeter' class="ctg-opt">Parking Meter</li>
-          <li id='Cat-parkingviolation' class="ctg-opt">Parking Violation/ Abandoned Auto</li>
-          <li id='Cat-parksreq' class="ctg-opt">Parks Request</li>
-          <li id='Cat-policing' class="ctg-opt">Policing Issue</li>
-          <li id='Cat-nbrpost' class="ctg-opt">Post to Neighbors</li>
-          <li id='Cat-potholes' class="ctg-opt">Potholes</li>
-          <li id='Cat-privspace' class="ctg-opt">Private Property Issue</li>
-          <li id='Cat-pubspace' class="ctg-opt">Public Space, Streets, and Drains</li>
-          <li id='Cat-reqvolunteers' class="ctg-opt">Request for volunteers</li>
-          <li id='Cat-sidewalks' class="ctg-opt">Sidewalks and Curb Damage</li>
-          <li id='Cat-signs' class="ctg-opt">Signs / Bus Shelters / Pavement Markings</li>
-          <li id='Cat-snowrelated' class="ctg-opt">Snow Related</li>
-          <li id='Cat-streetlamps' class="ctg-opt">Street Lamps</li>
-          <li id='Cat-traffic' class="ctg-opt">Traffic / Road Safety</li>
-          <li id='Cat-signals' class="ctg-opt">Traffic Signal / Pedestrian Signal</li>
-          <li id='Cat-trashandrecycling' class="ctg-opt">Trash and Recycling</li>
-          <li id='Cat-treetrimming' class="ctg-opt">Tree Trimming</li>
+        <ul class="dropdown-menu" role="menu">
+          <li id='Cat-all' class="ctg-opt"><a href="#">All</a></li>
+          <li id='Cat-bins' class="ctg-opt"><a href="#">Bins for Trash And Recycling</a></li>
+          <li id='Cat-generalbus' class="ctg-opt"><a href="#">General Bus Request/Incident</a></li>
+          <li id='Cat-graffiti' class="ctg-opt"><a href="#">Graffiti</a></li>
+          <li id='Cat-hangers' class="ctg-opt"><a href="#">Hangers</a></li>
+          <li id='Cat-healthcomplaints' class="ctg-opt"><a href="#">Health Complaints</a></li>
+          <li id='Cat-illegaldumping' class="ctg-opt"><a href="#">Illegal Dumping</a></li>
+          <li id='Cat-other' class="ctg-opt"><a href="#">Other</a></li>
+          <li id='Cat-othercity' class="ctg-opt"><a href="#">Other - city responsibility</a></li>
+          <li id='Cat-parkingmeter' class="ctg-opt"><a href="#">Parking Meter</a></li>
+          <li id='Cat-parkingviolation' class="ctg-opt"><a href="#">Parking Violation/ Abandoned Auto</a></li>
+          <li id='Cat-parksreq' class="ctg-opt"><a href="#">Parks Request</a></li>
+          <li id='Cat-policing' class="ctg-opt"><a href="#">Policing Issue</a></li>
+          <li id='Cat-nbrpost' class="ctg-opt"><a href="#">Post to Neighbors</a></li>
+          <li id='Cat-potholes' class="ctg-opt"><a href="#">Potholes</a></li>
+          <li id='Cat-privspace' class="ctg-opt"><a href="#">Private Property Issue</a></li>
+          <li id='Cat-pubspace' class="ctg-opt"><a href="#">Public Space, Streets, and Drains</a></li>
+          <li id='Cat-reqvolunteers' class="ctg-opt"><a href="#">Request for volunteers</a></li>
+          <li id='Cat-sidewalks' class="ctg-opt"><a href="#">Sidewalks and Curb Damage</a></li>
+          <li id='Cat-signs' class="ctg-opt"><a href="#">Signs / Bus Shelters / Pavement Markings</a></li>
+          <li id='Cat-snowrelated' class="ctg-opt"><a href="#">Snow Related</a></li>
+          <li id='Cat-streetlamps' class="ctg-opt"><a href="#">Street Lamps</a></li>
+          <li id='Cat-traffic' class="ctg-opt"><a href="#">Traffic / Road Safety</a></li>
+          <li id='Cat-signals' class="ctg-opt"><a href="#">Traffic Signal / Pedestrian Signal</a></li>
+          <li id='Cat-trashandrecycling' class="ctg-opt"><a href="#">Trash and Recycling</a></li>
+          <li id='Cat-treetrimming' class="ctg-opt"><a href="#">Tree Trimming</a></li>
         </ul>
       </div>
       <div class='btn-group' role='group'>
@@ -108,28 +108,28 @@
           <span class='caret'></span>
           <span class="sr-only">Toggle Dropdown</span>
         </button>
-        <ul class="dropdown-menu">
-          <li id='Nbrhd-all' class="nbrhd-opt">All</li>
-          <li id='Nbrhd-amity' class="nbrhd-opt">Amity</li>
-          <li id='Nbrhd-annex' class="nbrhd-opt">Annex</li>
-          <li id='Nbrhd-beaverhills' class="nbrhd-opt">Beaver Hills</li>
-          <li id='Nbrhd-dixwell' class="nbrhd-opt">Dixwell</li>
-          <li id='Nbrhd-downtown' class="nbrhd-opt">Downtown</li>
-          <li id='Nbrhd-dwight' class="nbrhd-opt">Dwight</li>
-          <li id='Nbrhd-eastrock' class="nbrhd-opt">East Rock</li>
-          <li id='Nbrhd-eastshore' class="nbrhd-opt">East Shore</li>
-          <li id='Nbrhd-edgewood' class="nbrhd-opt">Edgewood</li>
-          <li id='Nbrhd-fairhaven' class="nbrhd-opt">Fair Haven</li>
-          <li id='Nbrhd-fairhavenheights' class="nbrhd-opt">Fair Haven Heights</li>
-          <li id='Nbrhd-hill' class="nbrhd-opt">Hill</li>
-          <li id='Nbrhd-longwharf' class="nbrhd-opt">Long Wharf</li>
-          <li id='Nbrhd-newhallville' class="nbrhd-opt">Newhallville</li>
-          <li id='Nbrhd-prospecthill' class="nbrhd-opt">Prospect Hill</li>
-          <li id='Nbrhd-quinnipiac' class="nbrhd-opt">Quinnipiac</li>
-          <li id='Nbrhd-westriver' class="nbrhd-opt">West River</li>
-          <li id='Nbrhd-westrock' class="nbrhd-opt">West Rock</li>
-          <li id='Nbrhd-westville' class="nbrhd-opt">Westville</li>
-          <li id='Nbrhd-woostersquare' class="nbrhd-opt">Wooster Square/Mill River</li>
+        <ul class="dropdown-menu" role="menu">
+          <li id='Nbrhd-all' class="nbrhd-opt"><a href="#">All</a></li>
+          <li id='Nbrhd-amity' class="nbrhd-opt"><a href="#">Amity</a></li>
+          <li id='Nbrhd-annex' class="nbrhd-opt"><a href="#">Annex</a></li>
+          <li id='Nbrhd-beaverhills' class="nbrhd-opt"><a href="#">Beaver Hills</a></li>
+          <li id='Nbrhd-dixwell' class="nbrhd-opt"><a href="#">Dixwell</a></li>
+          <li id='Nbrhd-downtown' class="nbrhd-opt"><a href="#">Downtown</a></li>
+          <li id='Nbrhd-dwight' class="nbrhd-opt"><a href="#">Dwight</a></li>
+          <li id='Nbrhd-eastrock' class="nbrhd-opt"><a href="#">East Rock</a></li>
+          <li id='Nbrhd-eastshore' class="nbrhd-opt"><a href="#">East Shore</a></li>
+          <li id='Nbrhd-edgewood' class="nbrhd-opt"><a href="#">Edgewood</a></li>
+          <li id='Nbrhd-fairhaven' class="nbrhd-opt"><a href="#">Fair Haven</a></li>
+          <li id='Nbrhd-fairhavenheights' class="nbrhd-opt"><a href="#">Fair Haven Heights</a></li>
+          <li id='Nbrhd-hill' class="nbrhd-opt"><a href="#">Hill</a></li>
+          <li id='Nbrhd-longwharf' class="nbrhd-opt"><a href="#">Long Wharf</a></li>
+          <li id='Nbrhd-newhallville' class="nbrhd-opt"><a href="#">Newhallville</a></li>
+          <li id='Nbrhd-prospecthill' class="nbrhd-opt"><a href="#">Prospect Hill</a></li>
+          <li id='Nbrhd-quinnipiac' class="nbrhd-opt"><a href="#">Quinnipiac</a></li>
+          <li id='Nbrhd-westriver' class="nbrhd-opt"><a href="#">West River</a></li>
+          <li id='Nbrhd-westrock' class="nbrhd-opt"><a href="#">West Rock</a></li>
+          <li id='Nbrhd-westville' class="nbrhd-opt"><a href="#">Westville</a></li>
+          <li id='Nbrhd-woostersquare' class="nbrhd-opt"><a href="#">Wooster Square/Mill River</a></li>
         </ul>
       </div>
     </div>
