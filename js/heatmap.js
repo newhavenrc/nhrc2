@@ -119,14 +119,56 @@ var celltip = d3.tip()
            "Issues: " + d.count + "<br />";
   })
 
-  var svg = d3.select("#heatmap").append("svg")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
-      .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+var svg = d3.select("#heatmap").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 svg.call(nbrhdtip);
 svg.call(celltip);
+
+
+//initialization of the percent complete donut charts:
+var percmargin = { top: 0, right: 0, bottom: 0, left: 50 },
+    percwidth = 450,
+    percheight = 250,
+    twoPi = 2 * Math.PI,
+    progress = 0,
+    total = 1308573, // must be hard-coded if server doesn't report Content-Length
+    formatPercent = d3.format(".0%");
+
+var arc = d3.svg.arc()
+    .startAngle(0)
+    .innerRadius(70)
+    .outerRadius(80);
+
+var svg2 = d3.select("#roundissueperc").append("svg")
+    .attr("width", percwidth + percmargin.left + percmargin.right)
+    .attr("height", percheight + percmargin.top + percmargin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + (percmargin.left + percwidth / 2) + "," + (percmargin.top + percheight / 2) + ")");
+
+var meter = svg2.append("g")
+    .attr("class", "progress-meter");
+
+meter.append("path")
+    .attr("class", "background issue-donut")
+    .attr("d", arc.endAngle(twoPi));
+
+var foreground = meter.append("path")
+    .attr("class", "foreground");
+
+var perctext = meter.append("text")
+    .attr("class", 'issue-number-text')
+    .attr("text-anchor", "middle")
+    .attr("dy", ".0em");
+
+var perctextlabel = meter.append("text")
+    .attr("class", 'issue-number-label')
+    .attr("text-anchor", "middle")
+    .attr("dy", ".85em");
+
 
 
 d3.json("http://localhost/nhrc2/php/HeatmapData.php?tmCovrg=Tm-Cvrg-All", function(error, data) {
@@ -161,6 +203,40 @@ d3.json("http://localhost/nhrc2/php/HeatmapData.php?tmCovrg=Tm-Cvrg-All", functi
   //heatdataout['neighborhood'] = neighborhoods;
   //heatdataout['category'] = categories;
   
+  //Updated Percentage complete donut plot:
+  var acknowledged_frac = 0.85;
+  var completed_frac = 0.57;
+  var angular_rotation = -45 / 180 * Math.PI;
+
+  var arc2 = d3.svg.arc()
+      .startAngle(-1 * acknowledged_frac/2. * twoPi + angular_rotation)
+      .innerRadius(80)
+      .outerRadius(90)
+      .endAngle(acknowledged_frac/2. * twoPi + angular_rotation);
+
+  var meter2 = svg2.append("g")
+      .attr("class", "progress-meter");
+
+  meter2.append("path")
+      .attr("class", "acknowledged-donut")
+      .attr("d", arc2);
+
+  var arc3 = d3.svg.arc()
+      .startAngle(-1 * completed_frac/2. * twoPi + angular_rotation)
+      .innerRadius(90)
+      .outerRadius(100)
+      .endAngle(completed_frac/2. * twoPi + angular_rotation);
+
+  var meter3 = svg2.append("g")
+      .attr("class", "progress-meter");
+
+  meter3.append("path")
+      .attr("class", "completed-donut")
+      .attr("d", arc3);
+
+  perctext.text(data.length);
+  perctextlabel.text("issues");
+
   var colorScale = d3.scale.quantile()
         .domain([0, buckets - 1, d3.max(heatdataarr, function (d) { return d.count; })])
         .range(colors);
