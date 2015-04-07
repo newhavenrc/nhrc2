@@ -136,6 +136,7 @@
         var neighborhoodarr = [];
         var categoriesarr = [];
         var issuecountarr = [];
+        var heatdataarr = [];
 
         for (i = 0; i < neighborhoods.length; i++) {
           for (j = 0; j < categories.length; j++) {
@@ -144,18 +145,20 @@
             neighborhoodarr.push(i);
             categoriesarr.push(j);
             issuecountarr.push(heatdata[neighborhoods[i]][categories[j]]);
+            heatdataarr.push({'neighborhoodnum': i, 'categorynum': j, 'count': heatdata[neighborhoods[i]][categories[j]]});
           }
         }
         heatdataout['neighborhoodnum'] = neighborhoodarr;
         heatdataout['categorynum'] = categoriesarr;
         heatdataout['count'] = issuecountarr;
-        heatdataout['neighborhood'] = neighborhoods;
-        heatdataout['category'] = categories;
+        //heatdataout['neighborhood'] = neighborhoods;
+        //heatdataout['category'] = categories;
         
         var colorScale = d3.scale.quantile()
-              .domain([0, buckets - 1, d3.max(heatdataout, function (d) { return d.count; })])
+              .domain([0, buckets - 1, d3.max(heatdataarr, function (d) { return d.count; })])
               .range(colors);
         //document.write('All '+idx+' records have been summed.');
+        //console.log(colorScale);
 
 
         var svg = d3.select("#chart").append("svg")
@@ -173,6 +176,42 @@
               .style("text-anchor", "end")
               .attr("transform", "translate(-6," + gridSize / 1.5 + ")")
               .attr("class", function (d, i) { return "dayLabel mono axis"; });
+
+          var nbrhdLabels = svg.selectAll(".nbrhdLabel")
+              .data(nbrhdlabels)
+              .enter().append("text")
+                .text(function(d) { return d; })
+                .attr("x", function(d, i) { return i * gridSize; })
+                .attr("y", 0)
+                .style("text-anchor", "middle")
+                .attr("transform", "translate(" + gridSize / 2 + ", -6)")
+                .attr("class", function(d, i) { return "timeLabel mono axis"; });
+
+          console.log(heatdataout);
+          console.log(heatdataarr);
+          //console.log('neighborhoodnum: ');
+          //console.log(heatdataout.neighborhoodnum);
+          //console.log('categorynum: ');
+          //console.log(heatdataout.categorynum);
+
+          var heatMap = svg.selectAll(".issuecell")
+              .data(heatdataarr)
+              .enter().append("rect")
+              .attr("x", function(d) { 
+                return (+d.neighborhoodnum) * gridSize;
+              })
+              .attr("y", function(d) { return (+d.categorynum) * gridSize; })
+              .attr("rx", 4)
+              .attr("ry", 4)
+              .attr("class", "issuecell bordered")
+              .attr("width", gridSize)
+              .attr("height", gridSize)
+              .style("fill", colors[0]);
+
+          heatMap.transition().duration(1000)
+              .style("fill", function(d) { return colorScale(d.count); });
+
+          heatMap.append("title").text(function(d) { return d.count; });
 
 
       });
