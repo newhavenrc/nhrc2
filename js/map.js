@@ -17,9 +17,9 @@
       var num_types = ['numeric', 'integer', 'number', 'double precision'];
       var primary;
       cartodb.createVis("map", vizjson, {
-          tiles_loader: true,
+          //tiles_loader: true,
           center_lat: 41.3,
-          center_lon: -72.9,
+          center_lon: -72.94,
           zoom: 12
         })
         .done(function(viz, layers){
