@@ -174,9 +174,25 @@ var perctextlabel = meter.append("text")
 d3.json("http://localhost/nhrc2/php/HeatmapData.php?tmCovrg=Tm-Cvrg-All", function(error, data) {
   if (error) return console.warn(error);
   //console.log(data);
+
+  var not_acknowledged_count = 0;
+  var not_completed_count = 0;
+
   for (idx = 0; idx < data.length; idx++) {
     heatdata[data[idx]['neighborhood']][data[idx]['category']] += 1;
+    //console.log(data[idx]['acknowledged_at'], data[idx]['acknowledged_at'] == null);
+    if (data[idx]['acknowledged_at'] == null) {
+      not_acknowledged_count++;
+    }
+    if (data[idx]['closed_at'] == null) {
+      not_completed_count++;
+    }
+    
   }
+
+  console.log('Number of issues not acknowledged: ' + not_acknowledged_count);
+  console.log('Number of issues not completed: ' + not_completed_count);
+
   var heatdataout = {};
   var neighborhoodarr = [];
   var categoriesarr = [];
@@ -204,8 +220,8 @@ d3.json("http://localhost/nhrc2/php/HeatmapData.php?tmCovrg=Tm-Cvrg-All", functi
   //heatdataout['category'] = categories;
   
   //Updated Percentage complete donut plot:
-  var acknowledged_frac = 0.85;
-  var completed_frac = 0.57;
+  var acknowledged_frac = 1 - not_acknowledged_count/data.length;
+  var completed_frac = 1 - not_completed_count/data.length;
   var angular_rotation = -45 / 180 * Math.PI;
 
   var arc2 = d3.svg.arc()
