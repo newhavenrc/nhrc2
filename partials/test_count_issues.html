@@ -31,16 +31,16 @@
     Hello
 
     <script type="text/javascript">
-      var margin = { top: 50, right: 0, bottom: 100, left: 100 },
+      var margin = { top: 50, right: 0, bottom: 100, left: 300 },
           width = 960 - margin.left - margin.right,
-          height = 430 - margin.top - margin.bottom,
+          height = 900 - margin.top - margin.bottom,
           gridSize = Math.floor(width / 24),
           legendElementWidth = gridSize*2,
           buckets = 7,
           //colors = ["#ffffd9","#edf8b1","#c7e9b4","#7fcdbb","#41b6c4","#1d91c0","#225ea8","#253494","#081d58"], // alternatively colorbrewer.YlGnBu[9]
           colors = colorbrewer.YlGnBu[7],
-          categories = ["Potholes", "Trash", "Signs", "Health", "Property", "Graffiti", "Policing"],
-          times = ["ALL", "AMT", "BVH", "DXW", "DTN", "DGT", "ERK", "ESH", "EDG", "FHV", "FHH", "HLL", "LWF", "NHL", "PSH", "QNP", "WRV", "WRK", "WVL", "WOO"];
+          //categorylabels = ["Potholes", "Trash", "Signs", "Health", "Property", "Graffiti", "Policing"],
+          nbrhdlabels = ["ALL", "AMT", "BVH", "DXW", "DTN", "DGT", "ERK", "ESH", "EDG", "FHV", "FHH", "HLL", "LWF", "NHL", "PSH", "QNP", "WRV", "WRK", "WVL", "WOO"];
 
       var neighborhoods = [
         "Amity",
@@ -156,6 +156,24 @@
               .domain([0, buckets - 1, d3.max(heatdataout, function (d) { return d.count; })])
               .range(colors);
         //document.write('All '+idx+' records have been summed.');
+
+
+        var svg = d3.select("#chart").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        var catLabels = svg.selectAll(".catLabel")
+            .data(categories)
+            .enter().append("text")
+              .text(function (d) { return d; })
+              .attr("x", 0)
+              .attr("y", function (d, i) { return i * gridSize; })
+              .style("text-anchor", "end")
+              .attr("transform", "translate(-6," + gridSize / 1.5 + ")")
+              .attr("class", function (d, i) { return "dayLabel mono axis"; });
+
 
       });
       //end d3 section
