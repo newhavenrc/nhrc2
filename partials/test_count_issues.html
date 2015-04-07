@@ -22,7 +22,7 @@
         fill: #000;
       }
     </style>
-    <!-- <script src="../js/d3.min.js"></script> -->
+    <script src="../js/d3.min.js"></script>
     <script src="../js/colorbrewer.js"></script>
     <script src="../js/jquery-2.1.3.min.js"></script>
   </head>
@@ -31,6 +31,16 @@
     Hello
 
     <script type="text/javascript">
+      var margin = { top: 50, right: 0, bottom: 100, left: 100 },
+          width = 960 - margin.left - margin.right,
+          height = 430 - margin.top - margin.bottom,
+          gridSize = Math.floor(width / 24),
+          legendElementWidth = gridSize*2,
+          buckets = 7,
+          //colors = ["#ffffd9","#edf8b1","#c7e9b4","#7fcdbb","#41b6c4","#1d91c0","#225ea8","#253494","#081d58"], // alternatively colorbrewer.YlGnBu[9]
+          colors = colorbrewer.YlGnBu[7],
+          categories = ["Potholes", "Trash", "Signs", "Health", "Property", "Graffiti", "Policing"],
+          times = ["ALL", "AMT", "BVH", "DXW", "DTN", "DGT", "ERK", "ESH", "EDG", "FHV", "FHH", "HLL", "LWF", "NHL", "PSH", "QNP", "WRV", "WRK", "WVL", "WOO"];
 
       var neighborhoods = [
         "Amity",
@@ -99,26 +109,56 @@
       //console.log("http://localhost/nhrc2/php/HeatmapData.php?tmCovrg=Tm-Cvrg-All");
 
       //console.log('start of data:');
-
+      /*
       $.getJSON("http://localhost/nhrc2/php/HeatmapData.php?tmCovrg=Tm-Cvrg-All", function(issue){
           var idx = 0;
           $.each(issue, function(){
-              console.log(issue[idx]);
+              //console.log(issue[idx]);
               //console.log(issue[idx]['category']);
               //console.log(issue[idx]['neighborhood'] == 'East Rock');
               //document.write(issue+"<br />"); 
               heatdata[issue[idx]['neighborhood']][issue[idx]['category']] += 1;
-              document.write(idx+"<br />"); 
+              //document.write(idx+"<br />"); 
               idx += 1;
 
           });
-          for (i = 0; i < neighborhoods.length; i++) {
-            for (j = 0; j < categories.length; j++) {
-              console.log('neighborhood: '+neighborhoods[i]+' category: '+categories[j]+
-                ' count: '+heatdata[neighborhoods[i]][categories[j]]);
-            }
-          }
       });
+      */
+
+      //begin d3 section
+      d3.json("http://localhost/nhrc2/php/HeatmapData.php?tmCovrg=Tm-Cvrg-All", function(error, data) {
+        if (error) return console.warn(error);
+        //console.log(data);
+        for (idx = 0; idx < data.length; idx++) {
+          heatdata[data[idx]['neighborhood']][data[idx]['category']] += 1;
+        }
+        var heatdataout = {};
+        var neighborhoodarr = [];
+        var categoriesarr = [];
+        var issuecountarr = [];
+
+        for (i = 0; i < neighborhoods.length; i++) {
+          for (j = 0; j < categories.length; j++) {
+            //console.log('neighborhood: '+neighborhoods[i]+' category: '+categories[j]+
+            //  ' count: '+heatdata[neighborhoods[i]][categories[j]]);
+            neighborhoodarr.push(i);
+            categoriesarr.push(j);
+            issuecountarr.push(heatdata[neighborhoods[i]][categories[j]]);
+          }
+        }
+        heatdataout['neighborhoodnum'] = neighborhoodarr;
+        heatdataout['categorynum'] = categoriesarr;
+        heatdataout['count'] = issuecountarr;
+        heatdataout['neighborhood'] = neighborhoods;
+        heatdataout['category'] = categories;
+        
+        var colorScale = d3.scale.quantile()
+              .domain([0, buckets - 1, d3.max(heatdataout, function (d) { return d.count; })])
+              .range(colors);
+        //document.write('All '+idx+' records have been summed.');
+
+      });
+      //end d3 section
 
     </script>
   </body>
