@@ -240,3 +240,82 @@ span[class^="grade-"].large {
 .project-certification .simple-bars-wrapper .bars-column .simple-bar-with-heading .simple-bar-body .percentage .percentage-value {
   font-size: 20px;
 }
+
+#cartodbmapcontainer {
+  width: 100%;
+  padding-left: 0%;
+}
+
+#map {
+  width: 100%; 
+  height: 550px;
+}
+
+/*heatmap styling */
+rect.bordered {
+  stroke: #E6E6E6;
+  stroke-width:1px;   
+}
+
+text.mono {
+  font-size: 9pt;
+  font-family: Consolas, courier;
+  fill: #aaa;
+}
+
+text.axis-workweek {
+  fill: #000;
+}
+
+text.axis-worktime {
+  fill: #000;
+}
+
+.d3-nbrhd-tip {
+  line-height: 1;
+  font-family: Consolas, courier;
+  font-weight: bold;
+  padding: 3px;
+  background: #ffffff;
+  color: #aaa;
+  border-radius: 2px;
+  border-color: #aaa;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-nbrhd-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: #aaa;
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-nbrhd-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+
+}
+
+.d3-cell-tip {
+  line-height: 1;
+  font-family: Consolas, courier;
+  font-weight: bold;
+  padding: 3px;
+  background: #ffffff;
+  color: #aaa;
+  border-radius: 2px;
+  border-color: #aaa;
+}
+
+
+
+
+
+
