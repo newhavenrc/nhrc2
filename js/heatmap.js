@@ -170,7 +170,6 @@ var perctextlabel = meter.append("text")
     .attr("dy", ".85em");
 
 
-
 d3.json("http://localhost/nhrc2/php/HeatmapData.php?tmCovrg=Tm-Cvrg-All", function(error, data) {
   if (error) return console.warn(error);
   //console.log(data);
