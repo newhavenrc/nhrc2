@@ -63,7 +63,7 @@
 
     if ($tmCovrg =='Tm-Cvrg-All') {
         $myquery = "
-        SELECT created_at, category, neighborhood FROM nhrc ORDER BY created_at ASC LIMIT 10;
+        SELECT created_at, category, neighborhood FROM nhrc ORDER BY created_at ASC;
         ";   
     }
 
