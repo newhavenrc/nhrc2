@@ -11,24 +11,39 @@ $(document).ready(function () {
         if ($(this).attr('id') == 'Tm-Cvrg-All') {
             endDateObj = moment();
             begDateObj = moment("2008-03-28");
+            begDate = begDateObj.format('YYYY-MM-DDTHH:mm:ss');
+            endDate = endDateObj.format('YYYY-MM-DDTHH:mm:ss');
+            console.log('report.js registered a Time Coverage ALL click!');
             tmCvrg = 'Tm-Cvrg-All';
         }
         if ($(this).attr('id') == 'Tm-Cvrg-Yr') {
             endDateObj = moment();
             begDateObj = moment();
             begDateObj = begDateObj.days(-365);
+            begDate = begDateObj.format('YYYY-MM-DDTHH:mm:ss');
+            endDate = endDateObj.format('YYYY-MM-DDTHH:mm:ss');
+            console.log('report.js registered a Past Year click!');
+            console.log('begDate is: ' + begDate);
+            console.log('endDate is: ' + endDate);
+
             tmCvrg = 'Tm-Cvrg-Yr';
         }
         if ($(this).attr('id') == 'Tm-Cvrg-Mnth') {
             endDateObj = moment();
             begDateObj = moment();
             begDateObj = begDateObj.days(-30);
+            begDate = begDateObj.format('YYYY-MM-DDTHH:mm:ss');
+            endDate = endDateObj.format('YYYY-MM-DDTHH:mm:ss');
+            console.log('report.js registered a Past Month click!');
             tmCvrg = 'Tm-Cvrg-Mnth';
         }
         if ($(this).attr('id') == 'Tm-Cvrg-Wk') {
             endDateObj = moment();
             begDateObj = moment();
             begDateObj = begDateObj.days(-7);
+            begDate = begDateObj.format('YYYY-MM-DDTHH:mm:ss');
+            endDate = endDateObj.format('YYYY-MM-DDTHH:mm:ss');
+            console.log('report.js registered a Past Week click!');
             tmCvrg = 'Tm-Cvrg-Wk';
         }
 
