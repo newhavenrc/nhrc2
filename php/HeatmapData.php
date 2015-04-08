@@ -55,7 +55,7 @@
     }
 
 
-    if (! $tmCovrg =='Tm-Cvrg-All') {
+    if ($tmCovrg !='Tm-Cvrg-All') {
         $myquery = "
         SELECT acknowledged_at, closed_at, created_at, category, neighborhood FROM nhrc WHERE created_at > '" . $begDate . "' AND created_at < '" . $endDate . "' ORDER BY created_at ASC;
         ";   
