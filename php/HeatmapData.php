@@ -55,9 +55,9 @@
     }
 
 
-    if ($tmCovrg =='Tm-Cvrg-Yr') {
+    if (! $tmCovrg =='Tm-Cvrg-All') {
         $myquery = "
-        SELECT sampleTime as date, ccdSetpoint FROM environ WHERE sampleTime > '" . $begDate . "' AND sampleTime < '" . $endDate . "' AND MINUTE(sampleTime) < 2 AND HOUR(sampleTime) < 1  ORDER BY sampleTime ASC;
+        SELECT acknowledged_at, closed_at, created_at, category, neighborhood FROM nhrc WHERE created_at > '" . $begDate . "' AND created_at < '" . $endDate . "' ORDER BY created_at ASC;
         ";   
     }
 
