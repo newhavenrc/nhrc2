@@ -192,6 +192,7 @@ d3.json("http://localhost/nhrc2/php/HeatmapData.php?tmCovrg="+tmCvrg+"&begDate="
     
   }
 
+  console.log('Number of issues: ' + data.length);
   console.log('Number of issues not acknowledged: ' + not_acknowledged_count);
   console.log('Number of issues not completed: ' + not_completed_count);
 
