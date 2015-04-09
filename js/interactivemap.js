@@ -4,17 +4,18 @@ var sql = new cartodb.SQL({ user: 'mattgiguere' });
 
 function createSelector(layer) {
     console.log(layer);
-    var level = 'nh_neighborhoods';
-    var category = 'Potholes';
-    var end_date = '2015-03-15';
-    var start_date = '2015-01-01';
-    var query = "SELECT * FROM scf_data WHERE created_at > '"+ begDate + "'";
+    var query = "SELECT * FROM scf_data WHERE created_at > '"+ begDate + "' AND created_at <= '" + endDate + "'";
+
+    if (nbrhd != 'Nbrhd-all') {
+        query += " AND neighborhood = '" + mapNbrhdNames[nbrhd] + "'";
+    }
+
+    if (ctgry != 'Cat-all') {
+        query += " AND category = '" + mapCatNames[ctgry] + "'";
+    }
 
     console.log(query);
 
-    if (tmCvrg != 'Tm-Cvrg-All') {
-        console.log('hello');
-    }
     layer.setSQL(query);
 }
 
