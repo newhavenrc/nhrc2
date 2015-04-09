@@ -51,6 +51,8 @@ $(document).ready(function () {
         }
 
         plotHeatmap();
+        $('#cartodbmapspot').empty();
+        makemap();
 
     });
 
