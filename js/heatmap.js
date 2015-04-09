@@ -243,7 +243,23 @@ d3.json("http://localhost/nhrc2/php/HeatmapData.php?tmCovrg="+tmCvrg+"&begDate="
 
   var ackdonut = meter2.append("path")
       .attr("class", "acknowledged-donut")
-      .attr("d", arc2);
+      .attr("d", arc2)
+      .on('mouseover', function() {
+          perctext
+              .classed('issue-ack-perc-text', true)
+              .text(Math.round(acknowledged_frac * 100., 1) + "%");
+          perctextlabel
+            .classed('issue-ack-perc-label', true)
+            .text("acknowledged");
+      })
+      .on('mouseout', function() {
+          perctext
+            .classed('issue-ack-perc-text', false)
+            .text(data.length);
+          perctextlabel
+            .classed('issue-ack-perc-label', false)
+            .text("issues");
+      });
 
   //do a transition when the data change:
   ackdonut.transition().duration(750).attrTween("d", arc2Tween);
@@ -280,7 +296,23 @@ d3.json("http://localhost/nhrc2/php/HeatmapData.php?tmCovrg="+tmCvrg+"&begDate="
 
   var compdonut = meter3.append("path")
       .attr("class", "completed-donut")
-      .attr("d", arc3);
+      .attr("d", arc3)
+      .on('mouseover', function() {
+          perctext
+              .classed('issue-cmp-perc-text', true)
+              .text(Math.round(completed_frac * 100., 1) + "%");
+          perctextlabel
+            .classed('issue-cmp-perc-label', true)
+            .text("completed");
+      })
+      .on('mouseout', function() {
+          perctext
+            .classed('issue-cmp-perc-text', false)
+            .text(data.length);
+          perctextlabel
+            .classed('issue-cmp-perc-label', false)
+            .text("issues");
+      });
 
   compdonut.transition().duration(750).attrTween("d", arc3Tween);
 

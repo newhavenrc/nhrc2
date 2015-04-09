@@ -158,6 +158,22 @@ a:active {
   font-weight: bold;
 }
 
+.issue-ack-perc-label {
+  fill: #F17639;
+}
+
+.issue-ack-perc-text {
+  fill: #F17639;
+}
+
+.issue-cmp-perc-label {
+  fill: #3990B8;
+}
+
+.issue-cmp-perc-text {
+  fill: #3990B8;
+}
+
 .issue-donut {
   fill: #5E5F5F;
 }
