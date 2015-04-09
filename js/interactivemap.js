@@ -38,7 +38,7 @@ function createSelector(layer) {
 
 function makemap() {
     console.log('now making map...');
-    var vizjson = "https://mattgiguere.cartodb.com/api/v2/viz/4e00867a-def0-11e4-bd3e-0e4fddd5de28/viz.json";
+    var vizjson = "https://mattgiguere.cartodb.com/api/v2/viz/b4556692-def6-11e4-84f7-0e853d047bba/viz.json";
     cartodb.createVis('cartodbmapspot', vizjson, {
       tiles_loader: true,
       center_lat: 41.3,
