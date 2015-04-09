@@ -169,7 +169,7 @@ var perctextlabel = meter.append("text")
     .attr("text-anchor", "middle")
     .attr("dy", ".85em");
 
-var angular_rotation = 0 / 180 * Math.PI;
+var angular_rotation = -45 / 180 * Math.PI;
 
 var init_ack_start_angle = angular_rotation,
     init_ack_end_angle = angular_rotation,
@@ -201,8 +201,18 @@ d3.json("http://localhost/nhrc2/php/HeatmapData.php?tmCovrg="+tmCvrg+"&begDate="
   }
 
   console.log('Number of issues: ' + data.length);
-  console.log('Number of issues not acknowledged: ' + not_acknowledged_count);
-  console.log('Number of issues not completed: ' + not_completed_count);
+  //number of issues acknowledged:
+  var num_ack = data.length - not_acknowledged_count;
+  //percent acknowledged:
+  var perc_ack = Math.round(num_ack/data.length * 100., 1);
+  console.log(perc_ack + '% of issues acknowledged: ' + num_ack);
+
+  //number of issues completed:
+  var num_comp = data.length - not_completed_count;
+  //percent completed:
+  var perc_comp = Math.round(num_comp/data.length * 100., 1);
+
+  console.log(perc_comp + '% of issues completed: ' + num_comp);
 
   var heatdataout = {};
   var neighborhoodarr = [];
@@ -254,33 +264,25 @@ d3.json("http://localhost/nhrc2/php/HeatmapData.php?tmCovrg="+tmCvrg+"&begDate="
       .attr("class", "acknowledged-donut")
       .attr("d", arc2);
 
+  //do a transition when the data change:
+  ackdonut.transition().duration(750).attrTween("d", arc2Tween);
 
-  ackdonut.transition().duration(750).attrTween("d", arc2sTween);
-
-  //ackdonut.transition().duration(750).attrTween("d", arc2eTween);
-  console.log('init ack start angle: ');
-  console.log(init_ack_start_angle);
-  console.log(init_ack_start_angle * 180 / Math.PI);
-  console.log('new ack start angle: ' + new_ack_start_angle * 180 / Math.PI);
-
-  console.log('init ack end angle: ' + init_ack_end_angle * 180 / Math.PI);
-  console.log('new ack end angle: ' + new_ack_end_angle * 180 / Math.PI);
-
-  function arc2sTween() {
+  //a function for the custom transition for the acknowledged arc
+  //donut (the orange one):
+  function arc2Tween() {
     var i = d3.interpolate(init_ack_start_angle, new_ack_start_angle);
     var j = d3.interpolate(init_ack_end_angle, new_ack_end_angle);
     return function(t) {
-      if (t==1) {
+      if (t == 1) {
         //now that the transition has finished, update the initial
         //value for next time:
         init_ack_start_angle = new_ack_start_angle;
-        init_ack_eng_angle = new_ack_end_angle;
+        init_ack_end_angle = new_ack_end_angle;
       }
       return arc2.startAngle(i(t))
                 .endAngle(j(t))();
     };
   }
-  
 
   var arc3 = d3.svg.arc()
       .startAngle(new_cmp_start_angle)
@@ -291,10 +293,31 @@ d3.json("http://localhost/nhrc2/php/HeatmapData.php?tmCovrg="+tmCvrg+"&begDate="
   var meter3 = svg2.append("g")
       .attr("class", "progress-meter");
 
-  meter3.append("path")
+  //remove the old acknowledged-donut it if exists:
+  d3.selectAll('.completed-donut')
+    .remove();
+
+  var compdonut = meter3.append("path")
       .attr("class", "completed-donut")
       .attr("d", arc3);
 
+  compdonut.transition().duration(750).attrTween("d", arc3Tween);
+
+  function arc3Tween() {
+    var i = d3.interpolate(init_cmp_start_angle, new_cmp_start_angle);
+    var j = d3.interpolate(init_cmp_end_angle, new_cmp_end_angle);
+    return function(t) {
+      if (t == 1) {
+        //now that the transition has finished, update the initial
+        //value for next time:
+        init_cmp_start_angle = new_cmp_start_angle;
+        init_cmp_end_angle = new_cmp_end_angle;
+      }
+      return arc3.startAngle(i(t))
+                .endAngle(j(t))();
+    };
+  }
+  
   perctext.text(data.length);
   perctextlabel.text("issues");
 
