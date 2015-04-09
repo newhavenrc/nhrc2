@@ -305,10 +305,6 @@ d3.json("http://localhost/nhrc2/php/HeatmapData.php?tmCovrg="+tmCvrg+"&begDate="
   var colorScale = d3.scale.quantile()
         .domain([0, buckets - 1, d3.max(heatdataarr, function (d) { return d.count; })])
         .range(colors);
-  //document.write('All '+idx+' records have been summed.');
-  console.log('heatdataarr length: ', heatdataarr.length);
-  console.log(colorScale.quantiles());
-
 
   catlist = [];
   for (i=0; i < categories.length; i++){
