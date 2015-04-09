@@ -69,6 +69,12 @@ $(document).ready(function () {
         }
         console.log($(this).attr('id'));
         ctgry = $(this).attr('id')
+
+        console.log('now remaking heatmap!');
+        plotHeatmap();
+        $('#cartodbmapspot').empty();
+        makemap();
+
     });
 
     $('.nbrhd-opt').click(function() {
@@ -84,6 +90,11 @@ $(document).ready(function () {
         }
         console.log($(this).attr('id'));
         nbrhd = $(this).attr('id')
+
+        plotHeatmap();
+        $('#cartodbmapspot').empty();
+        makemap();
+
     });
 
 });

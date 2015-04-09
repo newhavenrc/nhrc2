@@ -6,6 +6,8 @@
     $begDate = $_GET['begDate'];
     $endDate = $_GET['endDate'];
     $tmCovrg = $_GET['tmCovrg'];
+    $ctgry = $_GET['ctgry'];
+    $nbrhd = $_GET['nbrhd'];
 
     //echo gethostname();
     //echo get_current_user();
@@ -47,25 +49,54 @@
     //echo $connection;
     //echo "\n";
 
-    $whereclause = 'WHERE ';
+    $whereclause = "WHERE ";
 
-    if (isset($_GET['objectnm'])){
-        $objectnm = $_GET['objectnm'];
-        $whereclause += 'o.object = ' . $objectnm;
-    }
+    //echo $whereclause;
 
+    //echo $tmCovrg !='Tm-Cvrg-All';
 
     if ($tmCovrg !='Tm-Cvrg-All') {
-        $myquery = "
-        SELECT acknowledged_at, closed_at, created_at, category, neighborhood FROM nhrc WHERE created_at > '" . $begDate . "' AND created_at < '" . $endDate . "' ORDER BY created_at ASC;
-        ";   
+        $whereclause = $whereclause . "created_at > '" . $begDate . "' AND created_at < '" . $endDate . "'";
     }
 
-    if ($tmCovrg =='Tm-Cvrg-All') {
-        $myquery = "
-        SELECT acknowledged_at, closed_at, created_at, category, neighborhood FROM nhrc ORDER BY created_at ASC;
-        ";   
+    //echo 'where after time coverage: ';
+    //echo $whereclause;
+
+    if (isset($_GET['ctgry']) and $ctgry != 'All') {
+        if (strlen($whereclause) > 6) {
+            $whereclause = $whereclause . ' AND';
+        }
+
+        $whereclause = $whereclause . " category = '" . $ctgry . "'";
+    } else {
+        $ctgry = 'All';
     }
+
+    //echo 'where after category: ';
+    //echo $whereclause;
+
+    if (isset($_GET['nbrhd']) and $nbrhd != 'All') {
+        if (strlen($whereclause) > 6) {
+            $whereclause = $whereclause . ' AND';
+        }
+
+        $whereclause = $whereclause . " neighborhood = '" . $nbrhd . "'";
+    } else {
+        $nbrhd = 'All';
+    }
+
+    //echo $whereclause;
+
+
+    if ($tmCovrg != 'Tm-Cvrg-All' or $ctgry != 'All' or $nbrhd != 'All') {
+        $myquery = "
+        SELECT acknowledged_at, closed_at, created_at, category, neighborhood FROM nhrc " . $whereclause . " ORDER BY created_at ASC;";   
+    } else {
+        $myquery = "
+        SELECT acknowledged_at, closed_at, created_at, category, neighborhood FROM nhrc ORDER BY created_at ASC;";   
+    }
+
+    //echo $myquery;
 
     $query = mysql_query($myquery);
     

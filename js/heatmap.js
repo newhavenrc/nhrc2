@@ -35,6 +35,60 @@ var neighborhoods = [
   "Wooster Square/Mill River"
 ]
 
+var mapNbrhdNames = {
+'Nbrhd-all' : 'All',
+'Nbrhd-amity' :   "Amity",
+'Nbrhd-annex' :   "Annex",
+'Nbrhd-beaverhills' :   "Beaver Hills",
+'Nbrhd-dixwell' :   "Dixwell",
+'Nbrhd-downtown' :   "Downtown",
+'Nbrhd-dwight' :   "Dwight",
+'Nbrhd-eastrock' :   "East Rock",
+'Nbrhd-eastshore' :   "East Shore",
+'Nbrhd-edgewood' :   "Edgewood",
+'Nbrhd-fairhaven' :   "Fair Haven",
+'Nbrhd-fairhavenheights' :   "Fair Haven Heights",
+'Nbrhd-hill' :   "Hill",
+'Nbrhd-longwharf' :   "Long Wharf",
+'Nbrhd-newhallville' :   "Newhallville",
+'Nbhrd-other':   "Other",
+'Nbrhd-prospecthill' :   "Prospect Hill",
+'Nbrhd-quinnipiac' :   "Quinnipiac",
+'Nbrhd-westriver' :   "West River",
+'Nbrhd-westrock' :   "West Rock",
+'Nbrhd-westville' :   "Westville",
+'Nbrhd-woostersquare'   :   "Wooster Square/Mill River"
+}
+
+var mapCatNames = {
+'Cat-all' : 'All',
+'Cat-bins' : "Bins for Trash & Recycling",
+'Cat-generalbus' : "General Bus Request/Incident",
+'Cat-graffiti' : "Graffiti",
+'Cat-hangers' : "Hangers",
+'Cat-healthcomplaints' : "Health Complaints",
+'Cat-illegaldumping' : "Illegal Dumping",
+'Cat-other' : "Other",
+'Cat-othercity' : "Other - city responsibility",
+'Cat-parkingmeter' : "Parking Meter",
+'Cat-parkingviolation' : 'Parking Violation/Abandoned Auto',
+'Cat-parksreq' : "Parks Request",
+'Cat-policing' : "Policing Issue",
+'Cat-nbrpost' : "Post to Neighbors",
+'Cat-potholes' : "Potholes",
+'Cat-privspace' : "Private Property Issue",
+'Cat-pubspace' : "Public Space, Streets and Drains",
+'Cat-reqvolunteers' : "Request for volunteers",
+'Cat-sidewalks' : "Sidewalks and Curb damage",
+'Cat-signs' : "Signs / Bus Shelters / Pavement Markings",
+'Cat-snowrelated' : "SNOW RELATED",
+'Cat-streetlamps' : "Street Lamp",
+'Cat-traffic' : "Traffic/Road Safety",
+'Cat-signals' : "Traffic Signal / Pedestrian Signal",
+'Cat-trashandrecycling' : "Trash & Recycling",
+'Cat-treetrimming' : "Tree Trimming"
+}
+
 var categories = [
   "Bins for Trash & Recycling",
   "General Bus Request/Incident",
@@ -45,6 +99,7 @@ var categories = [
   "Other",
   "Other - city responsibility",
   "Parking Meter",
+  "Parking Violation/Abandoned Auto",
   "Parks Request",
   "Policing Issue",
   "Post to Neighbors",
@@ -63,8 +118,8 @@ var categories = [
 ]
 
 var catlabels = ['Bins', 'Bus', 'Graffiti', 'Hangers', 'Health',
-                 'Dumping', 'Other', 'City Request', 'Parking',
-                 'Parks', 'Policing', 'To Neighbors', 'Potholes',
+                 'Dumping', 'Other', 'City Request', 'Parking Meter',
+                 'Parking Violation', 'Parks', 'Policing', 'To Neighbors', 'Potholes',
                  'Private Property', 'Public Space', 'Volunteers',
                  'Sidewalks', 'Signs', 'Snow', 'Street Lamps',
                  'Traffic', 'Signals', 'Trash', 'Trees']
@@ -150,8 +205,8 @@ var init_ack_start_angle = angular_rotation,
 
 function plotHeatmap() {
 
-console.log("http://localhost/nhrc2/php/HeatmapData.php?tmCovrg="+tmCvrg+"&begDate="+begDate+"&endDate="+endDate);
-d3.json("http://localhost/nhrc2/php/HeatmapData.php?tmCovrg="+tmCvrg+"&begDate="+begDate+"&endDate="+endDate, function(error, data) {
+console.log("http://localhost/nhrc2/php/HeatmapData.php?tmCovrg="+tmCvrg+"&begDate="+begDate+"&endDate="+endDate+"&ctgry="+mapCatNames[ctgry]);
+d3.json("http://localhost/nhrc2/php/HeatmapData.php?tmCovrg="+tmCvrg+"&begDate="+begDate+"&endDate="+endDate+"&ctgry="+mapCatNames[ctgry]+"&nbrhd="+mapNbrhdNames[nbrhd], function(error, data) {
   if (error) return console.warn(error);
 
   /* 
