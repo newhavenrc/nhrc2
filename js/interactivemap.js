@@ -1,10 +1,15 @@
 console.log('in interactivemap.js');
 
+var sql = new cartodb.SQL({ user: 'khof312' });
+
 function createSelector(layer) {
-    var sql = new cartodb.SQL({ user: 'khof312' });
     var table = layer.model.attributes.layer_definition.layers[0].options.layer_name;
-    var primaryquery = "SELECT the_geom, the_geom_webmercator, updated_at, created_at FROM "+table;
-    layer.setSQL(primaryquery);
+    var query = "SELECT the_geom, the_geom_webmercator, updated_at, created_at FROM "+table;
+
+    if (tmCvrg != 'Tm-Cvrg-All') {
+        console.log('hello');
+    }
+    layer.setSQL(query);
     /*
     var $options = $('#layer_selector li');
     $options.click(function(e) {
