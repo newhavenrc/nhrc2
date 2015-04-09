@@ -1,10 +1,16 @@
 console.log('in interactivemap.js');
 
-var sql = new cartodb.SQL({ user: 'khof312' });
+var sql = new cartodb.SQL({ user: 'mattgiguere' });
 
 function createSelector(layer) {
-    var table = layer.model.attributes.layer_definition.layers[0].options.layer_name;
-    var query = "SELECT the_geom, the_geom_webmercator, updated_at, created_at FROM "+table;
+    console.log(layer);
+    var level = 'nh_neighborhoods';
+    var category = 'Potholes';
+    var end_date = '2015-03-15';
+    var start_date = '2015-01-01';
+    var query = "SELECT * FROM scf_data WHERE created_at > '"+ begDate + "'";
+
+    console.log(query);
 
     if (tmCvrg != 'Tm-Cvrg-All') {
         console.log('hello');
@@ -32,8 +38,8 @@ function createSelector(layer) {
 
 function makemap() {
     console.log('now making map...');
-    var vizjson = "http://khof312.cartodb.com/api/v2/viz/6c5a0904-d58e-11e4-80ce-0e853d047bba/viz.json";
-    cartodb.createVis('map', vizjson, {
+    var vizjson = "https://mattgiguere.cartodb.com/api/v2/viz/4e00867a-def0-11e4-bd3e-0e4fddd5de28/viz.json";
+    cartodb.createVis('cartodbmapspot', vizjson, {
       tiles_loader: true,
       center_lat: 41.3,
       center_lon: -72.94,
@@ -42,7 +48,8 @@ function makemap() {
     .done(function(vis, layers) {
       // layer 0 is the base layer, layer 1 is cartodb layer
       console.log('length of layers: ', layers.length);
-      var subLayer = layers[layers.length-1].getSubLayer(0);
+      console.log(layers[1].layers[0].sub);
+      var subLayer = layers[1].layers[0].sub;
       createSelector(subLayer);
     })
     .error(function(err) {
