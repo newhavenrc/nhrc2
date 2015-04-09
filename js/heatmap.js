@@ -73,34 +73,6 @@ console.log(neighborhoods);
 console.log(' ');
 console.log(categories);
 
-//setup the nested objects to store the summed data:
-var heatdata = new Object();
-for (i = 0; i < neighborhoods.length; i++) {
-  heatdata[neighborhoods[i]] = {};
-  for (j = 0; j < categories.length; j++) {
-    heatdata[neighborhoods[i]][categories[j]] = 0;
-  }
-}
-
-//console.log("http://localhost/nhrc2/php/HeatmapData.php?tmCovrg=Tm-Cvrg-All");
-
-//console.log('start of data:');
-/*
-$.getJSON("http://localhost/nhrc2/php/HeatmapData.php?tmCovrg=Tm-Cvrg-All", function(issue){
-    var idx = 0;
-    $.each(issue, function(){
-        //console.log(issue[idx]);
-        //console.log(issue[idx]['category']);
-        //console.log(issue[idx]['neighborhood'] == 'East Rock');
-        //document.write(issue+"<br />"); 
-        heatdata[issue[idx]['neighborhood']][issue[idx]['category']] += 1;
-        //document.write(idx+"<br />"); 
-        idx += 1;
-
-    });
-});
-*/
-
 //begin d3 section
 
 var nbrhdtip = d3.tip()
@@ -187,6 +159,15 @@ d3.json("http://localhost/nhrc2/php/HeatmapData.php?tmCovrg="+tmCvrg+"&begDate="
      also keep track of the number of issues that were not 
      acknowledged or completed
   */
+  //setup the nested objects to store the summed data:
+  var heatdata = new Object();
+  for (i = 0; i < neighborhoods.length; i++) {
+    heatdata[neighborhoods[i]] = {};
+    for (j = 0; j < categories.length; j++) {
+      heatdata[neighborhoods[i]][categories[j]] = 0;
+    }
+  }
+
   var not_acknowledged_count = 0;
   var not_completed_count = 0;
   for (idx = 0; idx < data.length; idx++) {
@@ -325,7 +306,8 @@ d3.json("http://localhost/nhrc2/php/HeatmapData.php?tmCovrg="+tmCvrg+"&begDate="
         .domain([0, buckets - 1, d3.max(heatdataarr, function (d) { return d.count; })])
         .range(colors);
   //document.write('All '+idx+' records have been summed.');
-  //console.log(colorScale);
+  console.log('heatdataarr length: ', heatdataarr.length);
+  console.log(colorScale.quantiles());
 
 
   catlist = [];
@@ -391,6 +373,9 @@ d3.json("http://localhost/nhrc2/php/HeatmapData.php?tmCovrg="+tmCvrg+"&begDate="
 
     //heatMap.append("text").text(function(d) { return d.count; });
 
+    d3.selectAll(".legend")
+      .remove();
+
     var legend = svg.selectAll(".legend")
         .data([0].concat(colorScale.quantiles()), function(d) { return d; })
         .enter().append("g")
@@ -403,8 +388,11 @@ d3.json("http://localhost/nhrc2/php/HeatmapData.php?tmCovrg="+tmCvrg+"&begDate="
       .attr("height", gridSize / 2)
       .style("fill", function(d, i) { return colors[i]; });
 
+    d3.selectAll(".legend-cell-text")
+      .remove();
+
     legend.append("text")
-      .attr("class", "mono")
+      .attr("class", "mono legend-cell-text")
       .text(function(d) { return "≥ " + Math.round(d); })
       .attr("x", function(d, i) { return legendElementWidth * i + 15; })
       .attr("y", height + gridSize - 20);
