@@ -19,7 +19,30 @@ body {
 }
 
 .active-tmcov{
+  background-color: #5E5F5F;
+}
+
+.active-tmcov-link {
+  color: #ffffff !important;
+  font-weight: bold !important;
+}
+
+.active-cat{
   background-color: #3990B8;
+}
+
+.active-cat-link {
+  color: #ffffff !important;
+  font-weight: bold !important;
+}
+
+.active-nbrhd{
+  background-color: #F17639;
+}
+
+.active-nbrhd-link {
+  color: #ffffff !important;
+  font-weight: bold !important;
 }
 
 .d3-window {

@@ -1,11 +1,14 @@
 $(document).ready(function () {
     $('.tmcov-opt').click(function() {
         $('.tmcov-opt').removeClass('active-tmcov');
+        $('.tmcov-opt').find("a").removeClass('active-tmcov-link');
+
         console.log('time option clicked!');
 
         var $this = $(this);
         if (!$this.hasClass('active-tmcov')) {
             $this.addClass('active-tmcov');
+            $this.find("a").addClass('active-tmcov-link');
         }
         console.log($(this).attr('id'));
         if ($(this).attr('id') == 'Tm-Cvrg-All') {
