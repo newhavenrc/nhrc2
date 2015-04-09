@@ -352,23 +352,33 @@ d3.json("http://localhost/nhrc2/php/HeatmapData.php?tmCovrg="+tmCvrg+"&begDate="
     //console.log(heatdataout.categorynum);
 
     var heatMap = svg.selectAll(".issuecell")
-        .data(heatdataarr)
-        .enter().append("rect")
-        .attr("x", function(d) { 
-          return (+d.neighborhoodnum) * gridSize;
-        })
-        .attr("y", function(d) { return (+d.categorynum) * gridSize; })
-        //.attr("rx", 4)
-        //.attr("ry", 4)
-        .attr("class", "issuecell bordered")
-        .attr("width", gridSize)
-        .attr("height", gridSize)
-        .style("fill", colors[0])
-        .on('mouseover', celltip.show)
-        .on('mouseout', celltip.hide);
+        .data(heatdataarr);
+
+    heatMap.data(heatdataarr)
+      .exit()
+      .transition()
+      .duration(750)
+      .style("fill", colors[0])
+      .remove();
+
+    heatMap
+      .enter().append("rect")
+      .attr("x", function(d) { 
+        return (+d.neighborhoodnum) * gridSize;
+      })
+      .attr("y", function(d) { return (+d.categorynum) * gridSize; })
+      //.attr("rx", 4)
+      //.attr("ry", 4)
+      .attr("class", "issuecell bordered")
+      .attr("width", gridSize)
+      .attr("height", gridSize)
+      .style("fill", colors[0])
+      .on('mouseover', celltip.show)
+      .on('mouseout', celltip.hide);
 
 
-    heatMap.transition().duration(1000)
+    
+    heatMap.transition().duration(750)
         .style("fill", function(d) { return colorScale(d.count); });
 
     //heatMap.append("text").text(function(d) { return d.count; });
