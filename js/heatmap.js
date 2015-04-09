@@ -169,20 +169,28 @@ var perctextlabel = meter.append("text")
     .attr("text-anchor", "middle")
     .attr("dy", ".85em");
 
+var angular_rotation = 0 / 180 * Math.PI;
+
+var init_ack_start_angle = angular_rotation,
+    init_ack_end_angle = angular_rotation,
+    init_cmp_start_angle = angular_rotation,
+    init_cmp_end_angle = angular_rotation;
 
 function plotHeatmap() {
 
 console.log("http://localhost/nhrc2/php/HeatmapData.php?tmCovrg="+tmCvrg+"&begDate="+begDate+"&endDate="+endDate);
 d3.json("http://localhost/nhrc2/php/HeatmapData.php?tmCovrg="+tmCvrg+"&begDate="+begDate+"&endDate="+endDate, function(error, data) {
   if (error) return console.warn(error);
-  //console.log(data);
 
+  /* 
+    loop through data binning in neighborhood and category.
+     also keep track of the number of issues that were not 
+     acknowledged or completed
+  */
   var not_acknowledged_count = 0;
   var not_completed_count = 0;
-
   for (idx = 0; idx < data.length; idx++) {
     heatdata[data[idx]['neighborhood']][data[idx]['category']] += 1;
-    //console.log(data[idx]['acknowledged_at'], data[idx]['acknowledged_at'] == null);
     if (data[idx]['acknowledged_at'] == null) {
       not_acknowledged_count++;
     }
@@ -204,8 +212,6 @@ d3.json("http://localhost/nhrc2/php/HeatmapData.php?tmCovrg="+tmCvrg+"&begDate="
 
   for (i = 0; i < neighborhoods.length; i++) {
     for (j = 0; j < categories.length; j++) {
-      //console.log('neighborhood: '+neighborhoods[i]+' category: '+categories[j]+
-      //  ' count: '+heatdata[neighborhoods[i]][categories[j]]);
       neighborhoodarr.push(i);
       categoriesarr.push(j);
       issuecountarr.push(heatdata[neighborhoods[i]][categories[j]]);
@@ -225,23 +231,59 @@ d3.json("http://localhost/nhrc2/php/HeatmapData.php?tmCovrg="+tmCvrg+"&begDate="
   //Updated Percentage complete donut plot:
   var acknowledged_frac = 1 - not_acknowledged_count/data.length;
   var completed_frac = 1 - not_completed_count/data.length;
-  var angular_rotation = -45 / 180 * Math.PI;
+
+  var new_ack_start_angle = -1 * acknowledged_frac/2. * twoPi + angular_rotation;
+  var new_ack_end_angle = acknowledged_frac/2. * twoPi + angular_rotation;
+  var new_cmp_start_angle = -1 * completed_frac/2. * twoPi + angular_rotation;
+  var new_cmp_end_angle = completed_frac/2. * twoPi + angular_rotation;
 
   var arc2 = d3.svg.arc()
-      .startAngle(-1 * acknowledged_frac/2. * twoPi + angular_rotation)
+      .startAngle(angular_rotation)
       .innerRadius(80)
       .outerRadius(90)
-      .endAngle(acknowledged_frac/2. * twoPi + angular_rotation);
+      .endAngle(angular_rotation);
 
   var meter2 = svg2.append("g")
       .attr("class", "progress-meter");
 
-  meter2.append("path")
+  //remove the old acknowledged-donut it if exists:
+  d3.selectAll('.acknowledged-donut')
+    .remove();
+
+  var ackdonut = meter2.append("path")
       .attr("class", "acknowledged-donut")
       .attr("d", arc2);
 
+
+  ackdonut.transition().duration(750).attrTween("d", arc2sTween);
+
+  //ackdonut.transition().duration(750).attrTween("d", arc2eTween);
+  console.log('init ack start angle: ');
+  console.log(init_ack_start_angle);
+  console.log(init_ack_start_angle * 180 / Math.PI);
+  console.log('new ack start angle: ' + new_ack_start_angle * 180 / Math.PI);
+
+  console.log('init ack end angle: ' + init_ack_end_angle * 180 / Math.PI);
+  console.log('new ack end angle: ' + new_ack_end_angle * 180 / Math.PI);
+
+  function arc2sTween() {
+    var i = d3.interpolate(init_ack_start_angle, new_ack_start_angle);
+    var j = d3.interpolate(init_ack_end_angle, new_ack_end_angle);
+    return function(t) {
+      if (t==1) {
+        //now that the transition has finished, update the initial
+        //value for next time:
+        init_ack_start_angle = new_ack_start_angle;
+        init_ack_eng_angle = new_ack_end_angle;
+      }
+      return arc2.startAngle(i(t))
+                .endAngle(j(t))();
+    };
+  }
+  
+
   var arc3 = d3.svg.arc()
-      .startAngle(-1 * completed_frac/2. * twoPi + angular_rotation)
+      .startAngle(new_cmp_start_angle)
       .innerRadius(90)
       .outerRadius(100)
       .endAngle(completed_frac/2. * twoPi + angular_rotation);
