@@ -205,7 +205,13 @@ var init_ack_start_angle = angular_rotation,
 
 function plotHeatmap() {
 
-console.log("http://localhost/nhrc2/php/HeatmapData.php?tmCovrg="+tmCvrg+"&begDate="+begDate+"&endDate="+endDate+"&ctgry="+mapCatNames[ctgry]);
+if (window.location.hostname == "newhavenreportcard.com") {
+  prefix = "newhavenreportcard.com/"
+} else {
+  prefix = "http://localhost/"
+}
+
+console.log(prefix+"nhrc2/php/HeatmapData.php?tmCovrg="+tmCvrg+"&begDate="+begDate+"&endDate="+endDate+"&ctgry="+mapCatNames[ctgry]);
 d3.json("http://localhost/nhrc2/php/HeatmapData.php?tmCovrg="+tmCvrg+"&begDate="+begDate+"&endDate="+endDate+"&ctgry="+mapCatNames[ctgry]+"&nbrhd="+mapNbrhdNames[nbrhd], function(error, data) {
   if (error) return console.warn(error);
 
