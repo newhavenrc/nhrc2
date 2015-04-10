@@ -211,8 +211,8 @@ if (window.location.hostname == "newhavenreportcard.com") {
   prefix = "http://localhost/"
 }
 
-console.log(prefix+"nhrc2/php/HeatmapData.php?tmCovrg="+tmCvrg+"&begDate="+begDate+"&endDate="+endDate+"&ctgry="+mapCatNames[ctgry]);
-d3.json("http://localhost/nhrc2/php/HeatmapData.php?tmCovrg="+tmCvrg+"&begDate="+begDate+"&endDate="+endDate+"&ctgry="+mapCatNames[ctgry]+"&nbrhd="+mapNbrhdNames[nbrhd], function(error, data) {
+console.log(prefix+"nhrc2/php/HeatmapData.php?tmCovrg="+tmCvrg+"&begDate="+begDate+"&endDate="+endDate+"&ctgry="+mapCatNames[ctgry]+"&nbrhd="+mapNbrhdNames[nbrhd]);
+d3.json(prefix+"nhrc2/php/HeatmapData.php?tmCovrg="+tmCvrg+"&begDate="+begDate+"&endDate="+endDate+"&ctgry="+mapCatNames[ctgry]+"&nbrhd="+mapNbrhdNames[nbrhd], function(error, data) {
   if (error) return console.warn(error);
 
   /* 
