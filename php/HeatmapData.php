@@ -14,7 +14,7 @@
     $currentUser = get_current_user();
 
     if (gethostname() == 'ip-172-31-55-146') {
-        $afspath = "/home/ec2-user/";    
+        $afspath = "/home/wwwuser/";    
     } else {
         $afspath = "/Users/" . $currentUser . "/AeroFS/";
     }
