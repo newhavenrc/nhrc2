@@ -21,8 +21,7 @@ $(document).ready(function () {
         }
         if ($(this).attr('id') == 'Tm-Cvrg-Yr') {
             endDateObj = moment();
-            begDateObj = moment();
-            begDateObj = begDateObj.days(-365);
+            begDateObj = moment().subtract(1, 'years');
             begDate = begDateObj.format('YYYY-MM-DD');
             endDate = endDateObj.format('YYYY-MM-DD');
             console.log('report.js registered a Past Year click!');
@@ -33,8 +32,7 @@ $(document).ready(function () {
         }
         if ($(this).attr('id') == 'Tm-Cvrg-Mnth') {
             endDateObj = moment();
-            begDateObj = moment();
-            begDateObj = begDateObj.days(-30);
+            begDateObj = moment().subtract(1, 'months');
             begDate = begDateObj.format('YYYY-MM-DD');
             endDate = endDateObj.format('YYYY-MM-DD');
             console.log('report.js registered a Past Month click!');
@@ -42,14 +40,16 @@ $(document).ready(function () {
         }
         if ($(this).attr('id') == 'Tm-Cvrg-Wk') {
             endDateObj = moment();
-            begDateObj = moment();
-            begDateObj = begDateObj.days(-7);
+            begDateObj = moment().subtract(7, 'days');
             begDate = begDateObj.format('YYYY-MM-DD');
             endDate = endDateObj.format('YYYY-MM-DD');
             console.log('report.js registered a Past Week click!');
             tmCvrg = 'Tm-Cvrg-Wk';
         }
 
+        console.log('current date: ', moment().format('YYYY-MM-DD'));
+        console.log("new beginning date: ", begDate);
+        console.log("new end date: ", endDate);
         plotHeatmap();
         $('#cartodbmapspot').empty();
         makemap();
