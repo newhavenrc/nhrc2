@@ -106,6 +106,6 @@ var nbrhd = 'Nbrhd-all';
 var endDateObj = moment();
 var begDateObj = moment("2008-03-28");
 
-var begDate = begDateObj.format('YYYY-MM-DDTHH:mm:ss');
-var endDate = endDateObj.format('YYYY-MM-DDTHH:mm:ss');
+var begDate = begDateObj.format('YYYY-MM-DD');
+var endDate = endDateObj.format('YYYY-MM-DD');
 
