@@ -206,7 +206,7 @@ var init_ack_start_angle = angular_rotation,
 function plotHeatmap() {
 
 if (window.location.hostname == "newhavenreportcard.com") {
-  prefix = "newhavenreportcard.com/"
+  prefix = "http://newhavenreportcard.com/"
 } else {
   prefix = "http://localhost/nhrc2/"
 }
