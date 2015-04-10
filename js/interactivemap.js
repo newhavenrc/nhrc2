@@ -5,6 +5,8 @@ var sql = new cartodb.SQL({ user: 'mattgiguere' });
 function createSelector(layer) {
     console.log(layer);
     var query = "SELECT * FROM scf_data WHERE created_at > '"+ begDate + "' AND created_at <= '" + endDate + "'";
+    //console.log(query);
+    //query = "SELECT * FROM scf_data";
 
     if (nbrhd != 'Nbrhd-all') {
         query += " AND neighborhood = '" + mapNbrhdNames[nbrhd] + "'";
