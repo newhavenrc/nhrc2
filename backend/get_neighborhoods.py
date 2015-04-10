@@ -40,14 +40,14 @@ def match_neighborhoods(scf_df, neighborhoods):
     return hoods
 
 
-def get_neighborhoods():
+def get_neighborhoods(readfile=False, scf_df=''):
     """
     PURPOSE: To take in a pandas DataFrame of issues and a dictionary with the
     shapes and names of the New Haven neighborhoods and output a list
     containing the neighborhood for each issue.
     """
-
-    scf_df = ri.get_issues(readfile=True)
+    if len(scf_df) == 0:
+        scf_df = ri.get_issues(readfile=readfile)
 
     #now get the GIS data for the neighborhoods:
     rgns = fiona.open(nhrc2dir+'data/nh_neighborhoods/nh_neighborhoods.shp')

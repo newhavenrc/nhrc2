@@ -10,6 +10,7 @@ import argparse
 import nhrc2
 from nhrc2.backend import get_neighborhoods as get_ngbrhd
 from nhrc2.backend import read_issues as ri
+from nhrc2.backend import write_to_mysql
 
 __author__ = "Matt Giguere (github: @mattgiguere)"
 __license__ = "MIT"
@@ -45,7 +46,7 @@ def read_seeclickfix_api_to_csv(readfile=False, writejson=False,
 
     scf_df = ri.get_issues(readfile=readfile, writejson=writejson)
 
-    hoods = get_ngbrhd.get_neighborhoods()
+    hoods = get_ngbrhd.get_neighborhoods(readfile=readfile, scf_df=scf_df)
 
     print('len of hoods: {}'.format(len(hoods)))
     print('len of scf_df: {}'.format(len(scf_df)))
@@ -54,6 +55,7 @@ def read_seeclickfix_api_to_csv(readfile=False, writejson=False,
 
     if not donotwrite:
         write_to_csv(scf_df, outname)
+        write_to_mysql.write_to_mysql(scf_df)
 
 
 if __name__ == '__main__':
