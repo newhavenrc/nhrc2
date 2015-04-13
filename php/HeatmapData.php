@@ -13,8 +13,8 @@
     //echo get_current_user();
     $currentUser = get_current_user();
 
-    if (gethostname() == 'aramis.astro.yale.edu') {
-        $afspath = "/mg/AeroFS/";    
+    if (gethostname() == 'ip-172-31-55-146') {
+        $afspath = "/home/wwwuser/";    
     } else {
         $afspath = "/Users/" . $currentUser . "/AeroFS/";
     }

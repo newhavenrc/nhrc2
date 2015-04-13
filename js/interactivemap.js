@@ -4,7 +4,9 @@ var sql = new cartodb.SQL({ user: 'mattgiguere' });
 
 function createSelector(layer) {
     console.log(layer);
-    var query = "SELECT * FROM scf_data WHERE created_at > '"+ begDate + "' AND created_at <= '" + endDate + "'";
+    var query = "SELECT * FROM scf_data_full WHERE _created_at0 > '"+ begDate + "' AND _created_at0 <= '" + endDate + "'";
+    //console.log(query);
+    //query = "SELECT * FROM scf_data";
 
     if (nbrhd != 'Nbrhd-all') {
         query += " AND neighborhood = '" + mapNbrhdNames[nbrhd] + "'";
@@ -21,7 +23,7 @@ function createSelector(layer) {
 
 function makemap() {
     console.log('now making map...');
-    var vizjson = "https://mattgiguere.cartodb.com/api/v2/viz/b4556692-def6-11e4-84f7-0e853d047bba/viz.json";
+    var vizjson = "https://mattgiguere.cartodb.com/api/v2/viz/c3cd43dc-dfa6-11e4-8063-0e018d66dc29/viz.json";
     cartodb.createVis('cartodbmapspot', vizjson, {
       tiles_loader: true,
       center_lat: 41.3,
