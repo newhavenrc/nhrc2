@@ -85,6 +85,31 @@ var mapCatNames = {
 'Cat-treetrimming' : "Tree Trimming"
 }
 
+var cartoMapCatNames = {
+'Cat-all' : 'All',
+'Cat-bins' : "Bins for Trash & Recycling",
+'Cat-graffiti' : "Graffiti",
+'Cat-hangers' : "Hangers",
+'Cat-healthcomplaints' : "Health Complaints",
+'Cat-illegaldumping' : "Illegal Dumping",
+'Cat-other' : "Other",
+'Cat-othercity' : "Other - city responsibility",
+'Cat-parkingmeter' : "Parking Meter",
+'Cat-parkingviolation' : 'Parking Violation/Abandoned Auto',
+'Cat-parksreq' : "Parks Request",
+'Cat-policing' : "Policing Issue",
+'Cat-potholes' : "Potholes",
+'Cat-privspace' : "Private Property Issue",
+'Cat-pubspace' : "Public Space, Streets and Drains",
+'Cat-sidewalks' : "Sidewalks and Curb damage",
+'Cat-signs' : "Signs / Bus Shelters / Pavement Markings",
+'Cat-streetlamps' : "Street Lamp",
+'Cat-traffic' : "Traffic/Road Safety",
+'Cat-signals' : "Traffic Signal / Pedestrian Signal",
+'Cat-trashandrecycling' : "Trash & Recycling",
+'Cat-treetrimming' : "Tree Trimming"
+}
+
 var legendText = {
   'Vw-iss': 'Number of Issues',
   'Vw-ack': 'Percent of Issues Acknowledged',

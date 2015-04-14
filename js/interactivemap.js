@@ -13,7 +13,7 @@ function createSelector(layer) {
     }
 
     if (ctgry != 'Cat-all') {
-        query += " AND category = '" + mapCatNames[ctgry] + "'";
+        query += " AND category = '" + cartoMapCatNames[ctgry] + "'";
     }
 
     console.log(query);
