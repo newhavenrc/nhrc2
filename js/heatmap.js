@@ -11,6 +11,10 @@ var margin = { top: 50, right: 0, bottom: 100, left: 125 },
     //categorylabels = ["Potholes", "Trash", "Signs", "Health", "Property", "Graffiti", "Policing"],
     nbrhdlabels = ["AMT", "ANX", "BVH", "DXW", "DTN", "DGT", "ERK", "ESH", "EDG", "FHV", "FHH", "HLL", "LWF", "NHL", "OTH", "PSH", "QNP", "WRV", "WRK", "WVL", "WOO"];
 
+if (vw == 'Vw-ack-tm-imp' || vw == 'Vw-cmp-tm-imp') {
+  colors = ['#e31a1c', '#fd8d3c', '#fecc5c', '#FFFFBD', '#a1dab4', '#41b6c4', '#225ea8'];
+}
+
 var neighborhoods = [
   "Amity",
   "Annex",
