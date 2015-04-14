@@ -222,10 +222,17 @@ d3.json(prefix+"php/HeatmapData.php?tmCovrg="+tmCvrg+"&begDate="+begDate+"&endDa
   */
   //setup the nested objects to store the summed data:
   var heatdata = new Object();
+  var ackdata = new Object();
+  var cmpdata = new Object();
+
   for (i = 0; i < neighborhoods.length; i++) {
     heatdata[neighborhoods[i]] = {};
+    ackdata[neighborhoods[i]] = {};
+    cmpdata[neighborhoods[i]] = {};
     for (j = 0; j < categories.length; j++) {
       heatdata[neighborhoods[i]][categories[j]] = 0;
+      ackdata[neighborhoods[i]][categories[j]] = 0;
+      cmpdata[neighborhoods[i]][categories[j]] = 0;
     }
   }
 
@@ -235,9 +242,13 @@ d3.json(prefix+"php/HeatmapData.php?tmCovrg="+tmCvrg+"&begDate="+begDate+"&endDa
     heatdata[data[idx]['neighborhood']][data[idx]['category']] += 1;
     if (data[idx]['acknowledged_at'] == null) {
       not_acknowledged_count++;
+    } else {
+      ackdata[data[idx]['neighborhood']][data[idx]['category']] += 1;  
     }
     if (data[idx]['closed_at'] == null) {
       not_completed_count++;
+    } else {
+      cmpdata[data[idx]['neighborhood']][data[idx]['category']] += 1;
     }
     
   }

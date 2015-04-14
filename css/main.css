@@ -45,6 +45,15 @@ body {
   font-weight: bold !important;
 }
 
+.active-vw {
+  background-color: #C8E8B6;
+}
+
+.active-vw-link {
+  color: #5E5F5F !important;
+  font-weight: bold !important;
+}
+
 .d3-window {
   border-radius: 5px;
   border: 2px solid;
