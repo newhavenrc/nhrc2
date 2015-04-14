@@ -89,6 +89,16 @@ var mapCatNames = {
 'Cat-treetrimming' : "Tree Trimming"
 }
 
+var legendText = {
+  'Vw-iss': 'Number of Issues',
+  'Vw-ack': 'Percent of Issues Acknowledged',
+  'Vw-cmp': 'Percent of Issues Closed',
+  'Vw-ack-tm': 'Median days to acknowledge',
+  'Vw-cmp-tm': 'Median days to close',
+  'Vw-ack-tm-imp': 'Percent decrease in time to acknowledge',
+  'Vw-cmp-tm-imp': 'Percent decrease in time to close'
+}
+
 var categories = [
   "Bins for Trash & Recycling",
   "General Bus Request/Incident",
@@ -273,14 +283,42 @@ d3.json(prefix+"php/HeatmapData.php?tmCovrg="+tmCvrg+"&begDate="+begDate+"&endDa
   var issuecountarr = [];
   var heatdataarr = [];
 
+
   for (i = 0; i < neighborhoods.length; i++) {
     for (j = 0; j < categories.length; j++) {
+
+      switch(vw) {
+        case 'Vw-iss':
+          count = heatdata[neighborhoods[i]][categories[j]];
+          break;
+        case 'Vw-ack':
+          count = ackdata[neighborhoods[i]][categories[j]] / 
+                  heatdata[neighborhoods[i]][categories[j]] * 100.;
+          break;
+        case 'Vw-cmp':
+          count = cmpdata[neighborhoods[i]][categories[j]] / 
+                  heatdata[neighborhoods[i]][categories[j]] * 100.;
+          break;
+        case 'Vw-ack-tm':
+          count = 0;
+          break;
+        case 'Vw-cmp-tm':
+          count = 0;
+          break;
+        case 'Vw-ack-tm-imp':
+          count = 0;
+          break;
+        case 'Vw-cmp-tm-imp':
+          count = 0;
+          break;
+      }
+
       neighborhoodarr.push(i);
       categoriesarr.push(j);
       issuecountarr.push(heatdata[neighborhoods[i]][categories[j]]);
       heatdataarr.push({'neighborhoodnum': i,
                         'categorynum': j, 
-                        'count': heatdata[neighborhoods[i]][categories[j]],
+                        'count': count,
                         'neighborhoodname': neighborhoods[i],
                         'categoryname': categories[j]});
     }
@@ -509,7 +547,7 @@ d3.json(prefix+"php/HeatmapData.php?tmCovrg="+tmCvrg+"&begDate="+begDate+"&endDa
 
     legend.append("text")
       .attr("class", "mono")
-      .text("Number of Issues")
+      .text(legendText[vw])
       .attr("x", legendElementWidth * 2.5)
       .attr("y", height + 25);
 
