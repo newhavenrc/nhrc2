@@ -62,7 +62,7 @@ var mapNbrhdNames = {
 
 var mapCatNames = {
 'Cat-all' : 'All',
-'Cat-bins' : "Bins for Trash & Recycling",
+'Cat-bins' : "Bins for Trash %26 Recycling",
 'Cat-graffiti' : "Graffiti",
 'Cat-hangers' : "Hangers",
 'Cat-healthcomplaints' : "Health Complaints",
@@ -81,7 +81,7 @@ var mapCatNames = {
 'Cat-streetlamps' : "Street Lamp",
 'Cat-traffic' : "Traffic/Road Safety",
 'Cat-signals' : "Traffic Signal / Pedestrian Signal",
-'Cat-trashandrecycling' : "Trash & Recycling",
+'Cat-trashandrecycling' : "Trash %26 Recycling",
 'Cat-treetrimming' : "Tree Trimming"
 }
 
