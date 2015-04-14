@@ -50,7 +50,9 @@ def write_to_mysql(scf_df):
                      'summary': sqlalchemy.types.Text,
                      'updated_at': sqlalchemy.types.DateTime(timezone=True),
                      'int_issue_id': sqlalchemy.types.INTEGER,
-                     'neighborhood': sqlalchemy.types.Text}
+                     'neighborhood': sqlalchemy.types.Text,
+                     'time_to_ack': sqlalchemy.types.FLOAT,
+                     'time_to_cmp': sqlalchemy.types.FLOAT}
 
     scf_df.to_sql('nhrc', engine, if_exists='replace', index=False, dtype=my_data_types)
 
