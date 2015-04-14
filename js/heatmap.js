@@ -1,8 +1,8 @@
 var catnumber = 24;
 var gridSize = 30;
-var margin = { top: 25, right: 0, bottom: 100, left: 125 },
+var margin = { top: 50, right: 0, bottom: 100, left: 125 },
     width = 900 - margin.left - margin.right,
-    height = 900 - margin.top - margin.bottom,
+    height = 820 - margin.top - margin.bottom,
     //gridSize = Math.floor(width / catnumber),
     legendElementWidth = gridSize*2,
     buckets = 7,
@@ -63,7 +63,6 @@ var mapNbrhdNames = {
 var mapCatNames = {
 'Cat-all' : 'All',
 'Cat-bins' : "Bins for Trash & Recycling",
-'Cat-generalbus' : "General Bus Request/Incident",
 'Cat-graffiti' : "Graffiti",
 'Cat-hangers' : "Hangers",
 'Cat-healthcomplaints' : "Health Complaints",
@@ -74,14 +73,11 @@ var mapCatNames = {
 'Cat-parkingviolation' : 'Parking Violation/Abandoned Auto',
 'Cat-parksreq' : "Parks Request",
 'Cat-policing' : "Policing Issue",
-'Cat-nbrpost' : "Post to Neighbors",
 'Cat-potholes' : "Potholes",
 'Cat-privspace' : "Private Property Issue",
 'Cat-pubspace' : "Public Space, Streets and Drains",
-'Cat-reqvolunteers' : "Request for volunteers",
 'Cat-sidewalks' : "Sidewalks and Curb damage",
 'Cat-signs' : "Signs / Bus Shelters / Pavement Markings",
-'Cat-snowrelated' : "SNOW RELATED",
 'Cat-streetlamps' : "Street Lamp",
 'Cat-traffic' : "Traffic/Road Safety",
 'Cat-signals' : "Traffic Signal / Pedestrian Signal",
@@ -99,9 +95,19 @@ var legendText = {
   'Vw-cmp-tm-imp': 'Percent decrease in time to close'
 }
 
+var ttText = {
+  'Vw-iss': 'Number of Issues',
+  'Vw-ack': 'Percent Acknowledged',
+  'Vw-cmp': 'Percent Closed',
+  'Vw-ack-tm': 'Median days',
+  'Vw-cmp-tm': 'Median days',
+  'Vw-ack-tm-imp': 'Percent improvement',
+  'Vw-cmp-tm-imp': 'Percent improvement'
+}
+
+
 var categories = [
   "Bins for Trash & Recycling",
-  "General Bus Request/Incident",
   "Graffiti",
   "Hangers",
   "Health Complaints",
@@ -112,14 +118,11 @@ var categories = [
   "Parking Violation/Abandoned Auto",
   "Parks Request",
   "Policing Issue",
-  "Post to Neighbors",
   "Potholes",
   "Private Property Issue",
   "Public Space, Streets and Drains",
-  "Request for volunteers",
   "Sidewalks and Curb damage",
   "Signs / Bus Shelters / Pavement Markings",
-  "SNOW RELATED",
   "Street Lamp",
   "Traffic/Road Safety",
   "Traffic Signal / Pedestrian Signal",
@@ -127,11 +130,11 @@ var categories = [
   "Tree Trimming"
 ]
 
-var catlabels = ['Bins', 'Bus', 'Graffiti', 'Hangers', 'Health',
+var catlabels = ['Bins', 'Graffiti', 'Hangers', 'Health',
                  'Dumping', 'Other', 'City Request', 'Parking Meter',
-                 'Parking Violation', 'Parks', 'Policing', 'To Neighbors', 'Potholes',
-                 'Private Property', 'Public Space', 'Volunteers',
-                 'Sidewalks', 'Signs', 'Snow', 'Street Lamps',
+                 'Parking Violation', 'Parks', 'Policing', 'Potholes',
+                 'Private Property', 'Public Space',
+                 'Sidewalks', 'Signs', 'Street Lamps',
                  'Traffic', 'Signals', 'Trash', 'Trees']
 
 console.log(neighborhoods);
@@ -153,7 +156,7 @@ var celltip = d3.tip()
   .html(function(d) {
     return "Neighborhood: " + d.neighborhoodname + "<br />"+
            "Category: " + d.categoryname + "<br />"+
-           "Issues: " + d.count + "<br />";
+           ttText[vw] + ": " + d.count + "<br />";
   })
 
 var svg = d3.select("#heatmap").append("svg")
@@ -212,6 +215,10 @@ var init_ack_start_angle = angular_rotation,
     init_ack_end_angle = angular_rotation,
     init_cmp_start_angle = angular_rotation,
     init_cmp_end_angle = angular_rotation;
+
+function roundToOne(num) {    
+    return +(Math.round(num + "e+1")  + "e-1");
+}
 
 function plotHeatmap() {
 
@@ -292,12 +299,12 @@ d3.json(prefix+"php/HeatmapData.php?tmCovrg="+tmCvrg+"&begDate="+begDate+"&endDa
           count = heatdata[neighborhoods[i]][categories[j]];
           break;
         case 'Vw-ack':
-          count = ackdata[neighborhoods[i]][categories[j]] / 
-                  heatdata[neighborhoods[i]][categories[j]] * 100.;
+          count = roundToOne(ackdata[neighborhoods[i]][categories[j]] / 
+                  heatdata[neighborhoods[i]][categories[j]] * 100.);
           break;
         case 'Vw-cmp':
-          count = cmpdata[neighborhoods[i]][categories[j]] / 
-                  heatdata[neighborhoods[i]][categories[j]] * 100.;
+          count = roundToOne(cmpdata[neighborhoods[i]][categories[j]] / 
+                  heatdata[neighborhoods[i]][categories[j]] * 100.);
           break;
         case 'Vw-ack-tm':
           count = 0;
