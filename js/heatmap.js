@@ -114,8 +114,8 @@ var legendText = {
   'Vw-iss': 'Number of Issues',
   'Vw-ack': 'Percent of Issues Acknowledged',
   'Vw-cmp': 'Percent of Issues Closed',
-  'Vw-ack-tm': 'Median days to acknowledge',
-  'Vw-cmp-tm': 'Median days to close',
+  'Vw-ack-tm': 'Mean days to acknowledge',
+  'Vw-cmp-tm': 'Mean days to close',
   'Vw-ack-tm-imp': 'Percent decrease in time to acknowledge',
   'Vw-cmp-tm-imp': 'Percent decrease in time to close'
 }
@@ -124,8 +124,8 @@ var ttText = {
   'Vw-iss': 'Number of Issues',
   'Vw-ack': 'Percent Acknowledged',
   'Vw-cmp': 'Percent Closed',
-  'Vw-ack-tm': 'Median days',
-  'Vw-cmp-tm': 'Median days',
+  'Vw-ack-tm': 'Mean days',
+  'Vw-cmp-tm': 'Mean days',
   'Vw-ack-tm-imp': 'Percent improvement',
   'Vw-cmp-tm-imp': 'Percent improvement'
 }
@@ -266,15 +266,23 @@ d3.json(prefix+"php/HeatmapData.php?tmCovrg="+tmCvrg+"&begDate="+begDate+"&endDa
   var heatdata = new Object();
   var ackdata = new Object();
   var cmpdata = new Object();
+  var acktimsum = new Object();
+  var cmptimsum = new Object();
+  var emptlist = [];
 
   for (i = 0; i < neighborhoods.length; i++) {
     heatdata[neighborhoods[i]] = {};
     ackdata[neighborhoods[i]] = {};
     cmpdata[neighborhoods[i]] = {};
+    acktimsum[neighborhoods[i]] = {};
+    cmptimsum[neighborhoods[i]] = {};
+
     for (j = 0; j < categories.length; j++) {
       heatdata[neighborhoods[i]][categories[j]] = 0;
       ackdata[neighborhoods[i]][categories[j]] = 0;
       cmpdata[neighborhoods[i]][categories[j]] = 0;
+      acktimsum[neighborhoods[i]][categories[j]] = 0;
+      cmptimsum[neighborhoods[i]][categories[j]] = 0;
     }
   }
 
@@ -286,11 +294,13 @@ d3.json(prefix+"php/HeatmapData.php?tmCovrg="+tmCvrg+"&begDate="+begDate+"&endDa
       not_acknowledged_count++;
     } else {
       ackdata[data[idx]['neighborhood']][data[idx]['category']] += 1;  
+      acktimsum[data[idx]['neighborhood']][data[idx]['category']] += +(data[idx]['time_to_ack']);
     }
     if (data[idx]['closed_at'] == null) {
       not_completed_count++;
     } else {
       cmpdata[data[idx]['neighborhood']][data[idx]['category']] += 1;
+      cmptimsum[data[idx]['neighborhood']][data[idx]['category']] += +(data[idx]['time_to_cmp']);
     }
     
   }
@@ -332,10 +342,12 @@ d3.json(prefix+"php/HeatmapData.php?tmCovrg="+tmCvrg+"&begDate="+begDate+"&endDa
                   heatdata[neighborhoods[i]][categories[j]] * 100.);
           break;
         case 'Vw-ack-tm':
-          count = 0;
+          count = acktimsum[neighborhoods[i]][categories[j]] /
+                  ackdata[neighborhoods[i]][categories[j]];
           break;
         case 'Vw-cmp-tm':
-          count = 0;
+          count = cmptimsum[neighborhoods[i]][categories[j]] /
+                  cmpdata[neighborhoods[i]][categories[j]];
           break;
         case 'Vw-ack-tm-imp':
           count = 0;
