@@ -97,6 +97,26 @@ $(document).ready(function () {
 
     });
 
+    $('.vw-opt').click(function() {
+        $('.vw-opt').removeClass('active-vw');
+        $('.vw-opt').find("a").removeClass('active-vw-link');
+
+        console.log('neighborhood option clicked!');
+
+        var $this = $(this);
+        if (!$this.hasClass('active-vw')) {
+            $this.addClass('active-vw');
+            $this.find("a").addClass('active-vw-link');
+        }
+        console.log($(this).attr('id'));
+        vw = $(this).attr('id')
+
+        plotHeatmap();
+        $('#cartodbmapspot').empty();
+        makemap();
+
+    });
+
 });
 
 //Default is to plot all data. The first issue was from 2008-03-29:
