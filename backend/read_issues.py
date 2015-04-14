@@ -49,6 +49,9 @@ def read_categories(readfile=False):
     scf_cat_df = pd.DataFrame(jq(scf_cat_rule).transform(json_cats))
     scf_cat_df['type'] = [urlstr.split('/')[-1] for urlstr in scf_cat_df['url']]
 
+    # Only keep the categories for the city of New Haven:
+    scf_cat_df = scf_cat_df[scf_cat_df['organization'] == 'City of New Haven']
+
     return scf_cat_df
 
 

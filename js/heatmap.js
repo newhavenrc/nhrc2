@@ -1,8 +1,8 @@
 var catnumber = 24;
 var gridSize = 30;
-var margin = { top: 25, right: 0, bottom: 100, left: 125 },
+var margin = { top: 50, right: 0, bottom: 100, left: 125 },
     width = 900 - margin.left - margin.right,
-    height = 900 - margin.top - margin.bottom,
+    height = 820 - margin.top - margin.bottom,
     //gridSize = Math.floor(width / catnumber),
     legendElementWidth = gridSize*2,
     buckets = 7,
@@ -10,6 +10,10 @@ var margin = { top: 25, right: 0, bottom: 100, left: 125 },
     colors = colorbrewer.YlGnBu[7],
     //categorylabels = ["Potholes", "Trash", "Signs", "Health", "Property", "Graffiti", "Policing"],
     nbrhdlabels = ["AMT", "ANX", "BVH", "DXW", "DTN", "DGT", "ERK", "ESH", "EDG", "FHV", "FHH", "HLL", "LWF", "NHL", "OTH", "PSH", "QNP", "WRV", "WRK", "WVL", "WOO"];
+
+if (vw == 'Vw-ack-tm-imp' || vw == 'Vw-cmp-tm-imp') {
+  colors = ['#e31a1c', '#fd8d3c', '#fecc5c', '#FFFFBD', '#a1dab4', '#41b6c4', '#225ea8'];
+}
 
 var neighborhoods = [
   "Amity",
@@ -62,8 +66,7 @@ var mapNbrhdNames = {
 
 var mapCatNames = {
 'Cat-all' : 'All',
-'Cat-bins' : "Bins for Trash & Recycling",
-'Cat-generalbus' : "General Bus Request/Incident",
+'Cat-bins' : "Bins for Trash %26 Recycling",
 'Cat-graffiti' : "Graffiti",
 'Cat-hangers' : "Hangers",
 'Cat-healthcomplaints' : "Health Complaints",
@@ -74,14 +77,36 @@ var mapCatNames = {
 'Cat-parkingviolation' : 'Parking Violation/Abandoned Auto',
 'Cat-parksreq' : "Parks Request",
 'Cat-policing' : "Policing Issue",
-'Cat-nbrpost' : "Post to Neighbors",
 'Cat-potholes' : "Potholes",
 'Cat-privspace' : "Private Property Issue",
 'Cat-pubspace' : "Public Space, Streets and Drains",
-'Cat-reqvolunteers' : "Request for volunteers",
 'Cat-sidewalks' : "Sidewalks and Curb damage",
 'Cat-signs' : "Signs / Bus Shelters / Pavement Markings",
-'Cat-snowrelated' : "SNOW RELATED",
+'Cat-streetlamps' : "Street Lamp",
+'Cat-traffic' : "Traffic/Road Safety",
+'Cat-signals' : "Traffic Signal / Pedestrian Signal",
+'Cat-trashandrecycling' : "Trash %26 Recycling",
+'Cat-treetrimming' : "Tree Trimming"
+}
+
+var cartoMapCatNames = {
+'Cat-all' : 'All',
+'Cat-bins' : "Bins for Trash & Recycling",
+'Cat-graffiti' : "Graffiti",
+'Cat-hangers' : "Hangers",
+'Cat-healthcomplaints' : "Health Complaints",
+'Cat-illegaldumping' : "Illegal Dumping",
+'Cat-other' : "Other",
+'Cat-othercity' : "Other - city responsibility",
+'Cat-parkingmeter' : "Parking Meter",
+'Cat-parkingviolation' : 'Parking Violation/Abandoned Auto',
+'Cat-parksreq' : "Parks Request",
+'Cat-policing' : "Policing Issue",
+'Cat-potholes' : "Potholes",
+'Cat-privspace' : "Private Property Issue",
+'Cat-pubspace' : "Public Space, Streets and Drains",
+'Cat-sidewalks' : "Sidewalks and Curb damage",
+'Cat-signs' : "Signs / Bus Shelters / Pavement Markings",
 'Cat-streetlamps' : "Street Lamp",
 'Cat-traffic' : "Traffic/Road Safety",
 'Cat-signals' : "Traffic Signal / Pedestrian Signal",
@@ -89,9 +114,29 @@ var mapCatNames = {
 'Cat-treetrimming' : "Tree Trimming"
 }
 
+var legendText = {
+  'Vw-iss': 'Number of Issues',
+  'Vw-ack': 'Percent of Issues Acknowledged',
+  'Vw-cmp': 'Percent of Issues Closed',
+  'Vw-ack-tm': 'Mean days to acknowledge',
+  'Vw-cmp-tm': 'Mean days to close',
+  'Vw-ack-tm-imp': 'Percent decrease in time to acknowledge',
+  'Vw-cmp-tm-imp': 'Percent decrease in time to close'
+}
+
+var ttText = {
+  'Vw-iss': 'Number of Issues',
+  'Vw-ack': 'Percent Acknowledged',
+  'Vw-cmp': 'Percent Closed',
+  'Vw-ack-tm': 'Mean days',
+  'Vw-cmp-tm': 'Mean days',
+  'Vw-ack-tm-imp': 'Percent improvement',
+  'Vw-cmp-tm-imp': 'Percent improvement'
+}
+
+
 var categories = [
   "Bins for Trash & Recycling",
-  "General Bus Request/Incident",
   "Graffiti",
   "Hangers",
   "Health Complaints",
@@ -102,14 +147,11 @@ var categories = [
   "Parking Violation/Abandoned Auto",
   "Parks Request",
   "Policing Issue",
-  "Post to Neighbors",
   "Potholes",
   "Private Property Issue",
   "Public Space, Streets and Drains",
-  "Request for volunteers",
   "Sidewalks and Curb damage",
   "Signs / Bus Shelters / Pavement Markings",
-  "SNOW RELATED",
   "Street Lamp",
   "Traffic/Road Safety",
   "Traffic Signal / Pedestrian Signal",
@@ -117,11 +159,11 @@ var categories = [
   "Tree Trimming"
 ]
 
-var catlabels = ['Bins', 'Bus', 'Graffiti', 'Hangers', 'Health',
+var catlabels = ['Bins', 'Graffiti', 'Hangers', 'Health',
                  'Dumping', 'Other', 'City Request', 'Parking Meter',
-                 'Parking Violation', 'Parks', 'Policing', 'To Neighbors', 'Potholes',
-                 'Private Property', 'Public Space', 'Volunteers',
-                 'Sidewalks', 'Signs', 'Snow', 'Street Lamps',
+                 'Parking Violation', 'Parks', 'Policing', 'Potholes',
+                 'Private Property', 'Public Space',
+                 'Sidewalks', 'Signs', 'Street Lamps',
                  'Traffic', 'Signals', 'Trash', 'Trees']
 
 console.log(neighborhoods);
@@ -143,7 +185,7 @@ var celltip = d3.tip()
   .html(function(d) {
     return "Neighborhood: " + d.neighborhoodname + "<br />"+
            "Category: " + d.categoryname + "<br />"+
-           "Issues: " + d.count + "<br />";
+           ttText[vw] + ": " + d.count + "<br />";
   })
 
 var svg = d3.select("#heatmap").append("svg")
@@ -203,6 +245,10 @@ var init_ack_start_angle = angular_rotation,
     init_cmp_start_angle = angular_rotation,
     init_cmp_end_angle = angular_rotation;
 
+function roundToOne(num) {    
+    return +(Math.round(num + "e+1")  + "e-1");
+}
+
 function plotHeatmap() {
 
 if (window.location.hostname == "newhavenreportcard.com") {
@@ -224,15 +270,23 @@ d3.json(prefix+"php/HeatmapData.php?tmCovrg="+tmCvrg+"&begDate="+begDate+"&endDa
   var heatdata = new Object();
   var ackdata = new Object();
   var cmpdata = new Object();
+  var acktimsum = new Object();
+  var cmptimsum = new Object();
+  var emptlist = [];
 
   for (i = 0; i < neighborhoods.length; i++) {
     heatdata[neighborhoods[i]] = {};
     ackdata[neighborhoods[i]] = {};
     cmpdata[neighborhoods[i]] = {};
+    acktimsum[neighborhoods[i]] = {};
+    cmptimsum[neighborhoods[i]] = {};
+
     for (j = 0; j < categories.length; j++) {
       heatdata[neighborhoods[i]][categories[j]] = 0;
       ackdata[neighborhoods[i]][categories[j]] = 0;
       cmpdata[neighborhoods[i]][categories[j]] = 0;
+      acktimsum[neighborhoods[i]][categories[j]] = 0;
+      cmptimsum[neighborhoods[i]][categories[j]] = 0;
     }
   }
 
@@ -244,11 +298,13 @@ d3.json(prefix+"php/HeatmapData.php?tmCovrg="+tmCvrg+"&begDate="+begDate+"&endDa
       not_acknowledged_count++;
     } else {
       ackdata[data[idx]['neighborhood']][data[idx]['category']] += 1;  
+      acktimsum[data[idx]['neighborhood']][data[idx]['category']] += +(data[idx]['time_to_ack']);
     }
     if (data[idx]['closed_at'] == null) {
       not_completed_count++;
     } else {
       cmpdata[data[idx]['neighborhood']][data[idx]['category']] += 1;
+      cmptimsum[data[idx]['neighborhood']][data[idx]['category']] += +(data[idx]['time_to_cmp']);
     }
     
   }
@@ -273,14 +329,44 @@ d3.json(prefix+"php/HeatmapData.php?tmCovrg="+tmCvrg+"&begDate="+begDate+"&endDa
   var issuecountarr = [];
   var heatdataarr = [];
 
+
   for (i = 0; i < neighborhoods.length; i++) {
     for (j = 0; j < categories.length; j++) {
+
+      switch(vw) {
+        case 'Vw-iss':
+          count = heatdata[neighborhoods[i]][categories[j]];
+          break;
+        case 'Vw-ack':
+          count = roundToOne(ackdata[neighborhoods[i]][categories[j]] / 
+                  heatdata[neighborhoods[i]][categories[j]] * 100.);
+          break;
+        case 'Vw-cmp':
+          count = roundToOne(cmpdata[neighborhoods[i]][categories[j]] / 
+                  heatdata[neighborhoods[i]][categories[j]] * 100.);
+          break;
+        case 'Vw-ack-tm':
+          count = acktimsum[neighborhoods[i]][categories[j]] /
+                  ackdata[neighborhoods[i]][categories[j]];
+          break;
+        case 'Vw-cmp-tm':
+          count = cmptimsum[neighborhoods[i]][categories[j]] /
+                  cmpdata[neighborhoods[i]][categories[j]];
+          break;
+        case 'Vw-ack-tm-imp':
+          count = 0;
+          break;
+        case 'Vw-cmp-tm-imp':
+          count = 0;
+          break;
+      }
+
       neighborhoodarr.push(i);
       categoriesarr.push(j);
       issuecountarr.push(heatdata[neighborhoods[i]][categories[j]]);
       heatdataarr.push({'neighborhoodnum': i,
                         'categorynum': j, 
-                        'count': heatdata[neighborhoods[i]][categories[j]],
+                        'count': count,
                         'neighborhoodname': neighborhoods[i],
                         'categoryname': categories[j]});
     }
@@ -509,7 +595,7 @@ d3.json(prefix+"php/HeatmapData.php?tmCovrg="+tmCvrg+"&begDate="+begDate+"&endDa
 
     legend.append("text")
       .attr("class", "mono")
-      .text("Number of Issues")
+      .text(legendText[vw])
       .attr("x", legendElementWidth * 2.5)
       .attr("y", height + 25);
 

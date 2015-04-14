@@ -123,6 +123,7 @@ $(document).ready(function () {
 var tmCvrg = 'Tm-Cvrg-All';
 var ctgry = 'Cat-all';
 var nbrhd = 'Nbrhd-all';
+var vw = 'Vw-iss';
 var endDateObj = moment();
 var begDateObj = moment("2008-03-28");
 

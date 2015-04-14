@@ -11,6 +11,7 @@ import nhrc2
 from nhrc2.backend import get_neighborhoods as get_ngbrhd
 from nhrc2.backend import read_issues as ri
 from nhrc2.backend import write_to_mysql
+import pandas as pd
 
 __author__ = "Matt Giguere (github: @mattgiguere)"
 __license__ = "MIT"
@@ -52,6 +53,11 @@ def read_seeclickfix_api_to_csv(readfile=False, writejson=False,
     print('len of scf_df: {}'.format(len(scf_df)))
 
     scf_df['neighborhood'] = hoods
+    scf_df['time_to_ack'] = (pd.to_datetime(scf_df['acknowledged_at']) -
+                             pd.to_datetime(scf_df['created_at'])) / pd.Timedelta('1d')
+
+    scf_df['time_to_cmp'] = (pd.to_datetime(scf_df['closed_at']) -
+                             pd.to_datetime(scf_df['created_at'])) / pd.Timedelta('1d')
 
     if not donotwrite:
         write_to_csv(scf_df, outname)

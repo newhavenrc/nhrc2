@@ -90,10 +90,10 @@
 
     if ($tmCovrg != 'Tm-Cvrg-All' or $ctgry != 'All' or $nbrhd != 'All') {
         $myquery = "
-        SELECT acknowledged_at, closed_at, created_at, category, neighborhood FROM nhrc " . $whereclause . " ORDER BY created_at ASC;";   
+        SELECT acknowledged_at, closed_at, created_at, category, neighborhood, time_to_ack, time_to_cmp FROM nhrc " . $whereclause . " ORDER BY created_at ASC;";   
     } else {
         $myquery = "
-        SELECT acknowledged_at, closed_at, created_at, category, neighborhood FROM nhrc ORDER BY created_at ASC;";   
+        SELECT acknowledged_at, closed_at, created_at, category, neighborhood, time_to_ack, time_to_cmp FROM nhrc ORDER BY created_at ASC;";   
     }
 
     //echo $myquery;
